@@ -20,7 +20,7 @@
 
     <VBtn
       class="mb-11"
-      to="/home"
+      to="/"
     >
       Back To Home
     </VBtn>
