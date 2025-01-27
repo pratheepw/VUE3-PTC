@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { rounded } from '../demos/components/avatar/demoCodeAvatar';
-import { disabled } from '../demos/components/pagination/demoCodePagination';
-import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFileInput';
+    const router=useRouter()
 
     const accountData=[
         {
             title:'Cheque',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -14,49 +12,49 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Inventory Aging',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Export Account',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Stock Management',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Stock Movement',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Received Amount by Delivery Date',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Estimation of Formula Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Stock by Week',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -64,7 +62,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Lock PO',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -75,28 +73,28 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const fabricData=[
         {
             title:'Fabric Dimension',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Fabric Ingredient',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Fabric Standard',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Fabric Order Sheet',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -104,49 +102,49 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Fabric Order Balance',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Yarn Test Report of BOKEN',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Fabric Price Check',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Lot Movement',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'PO Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Fabric Registration',
-            value:'',
+            to:'/fabric/fabric-registration',
             props:{
-                disabled:true
+                disabled:false
             },
         },
         {
             title:'Fabric Order Movement',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -156,35 +154,35 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const YarnStockData=[
         {
             title:'Monthly Yarn',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Balance',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Check In/Out/Return',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'ใบสรุป',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Yarn Cost',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -192,14 +190,14 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Dead Stock',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Yarn Movement',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -211,7 +209,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const EximData=[
         {
             title:'Export Invoice',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -219,7 +217,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Accessories Invoice',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -227,7 +225,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Search by Export No.',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -238,91 +236,91 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const GreigeFabricStockData=[
         {
             title:'Knit Schedule',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Check In',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Check Out',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Balance',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Yarn Consumption (Plan)',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Search Lot No.',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Delete Barcode',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Search Grige Fabric by Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Greige Fabric Quality Data',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Estimation of Formula Greige Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Search Greige Fabric by Lot No.',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Monthly Griege Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'WIP',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -332,28 +330,28 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const DyeingSectionData=[
         {
             title:'Dyeing Schedule',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Shrinkage',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Preparation Order',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Temperature and Humidity Control',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -363,7 +361,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const HRData=[
         {
             title:'Summary Purchase Order',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -371,7 +369,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Summary Receive',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -379,7 +377,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Meeting Room Schedule',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -389,49 +387,49 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const FinishFabricWIPData=[
         {
             title:'Dyeing Delivery Report',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Daily Delivery',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Daily Defect',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'ตรวจสอบผ้าสำเร็จรูป',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Stock Finish Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Finish Fabric Invoice Delivery',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Monthly Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -441,42 +439,42 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const FinishFabricNCData=[
         {
             title:'Check In',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Check Out',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Balance',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Search Finish Fabric',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Stock Card',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'PTC Internal Testing',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -486,14 +484,14 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const TPiCSData=[
     {
             title:'TPiCS Contract',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Unit Cost',
-            value:'',
+            to:'',
             props:{
                 prependIcon:'tabler-lock',
                 disabled:true
@@ -501,21 +499,21 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         },
         {
             title:'Inter Sale Order Balance',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Find Fabric Code',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Order Balance',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -525,7 +523,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const SalesData=[
     {
             title:'Sale Report (Daily Sale Report)',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -535,35 +533,35 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const ProductionData=[
         {
             title:'Production Daily Report by Qty,Amount',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Line Profit Report',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Sewing Loss Report',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'% Cutting - Sewing - Packing',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'Solution Activity',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -573,14 +571,14 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
     const InterProductionData=[
         {
             title:'WIP Finished Goods Inter',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
         },
         {
             title:'WIP Finished Goods Inter (Balance)',
-            value:'',
+            to:'',
             props:{
                 disabled:true
             },
@@ -591,61 +589,75 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         {
             title: 'Account',
             icon:'tabler-cash-banknote',
+            height:'612.391px',
             listItem:accountData
         },
         {
             title:'Fabric',
             icon:'tabler-shirt',
+            height:'612.391px',
             listItem:fabricData
-        },
-        {
-            title:'Yarn Stock',
-            icon:'tabler-needle-thread',
-            listItem:YarnStockData
-        },
-        {
-            title:'Exim',
-            icon:'tabler-truck',
-            listItem:EximData
         },
         {
             title:'Greige Fabric Stock',
             icon: 'tabler-building-warehouse',
+            height:'612.391px',
             listItem:GreigeFabricStockData
         },
         {
+            title:'Exim',
+            icon:'tabler-truck',
+            height:'384.391px',
+            listItem:EximData
+        },
+        {
+            title:'Yarn Stock',
+            icon:'tabler-needle-thread',
+            height:'384.391px',
+            listItem:YarnStockData
+        },
+        
+        
+        {
             title:'Dyeing Section',
             icon:'tabler-palette',
+            height:'384.391px',
             listItem:DyeingSectionData
         },
         {
             title:'HR',
             icon:'tabler-users-group',
+            height:'384.391px',
             listItem:HRData
         },
         {
             title:'Finish Fabric WIP',
             icon:'tabler-building-warehouse',
+            height:'384.391px',
             listItem:FinishFabricWIPData
         },
         {
             title:'Finish Fabric NC',
             icon:'tabler-building-warehouse',
+            height:'384.391px',
             listItem:FinishFabricNCData
         },
         {
             title:'TPiCS',
             icon:'tabler-brand-twitter',
+            height:'308.391px',
             listItem:TPiCSData
         },
         {
             title:'Sales',
             icon:'tabler-user-dollar',
+            height:'308.391px',
             listItem:SalesData
         },
         {
             title:'Production',
             icon:'tabler-asset',
+            height:'308.391px',
             listItem:ProductionData
         },
         {
@@ -655,6 +667,10 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         }
     ]
 
+    const openLink=(item)=>{
+        console.log(item)
+        router.push(item)
+    }
     
 
 </script>
@@ -677,7 +693,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
         sm="6"
         md="4"
     >
-        <VCard>
+        <VCard :height="data.height" >
             <VCardItem>
                 <template #prepend>
                     <VIcon
@@ -693,7 +709,7 @@ import { prependIcon } from '../demos/forms/form-elements/file-input/demoCodeFil
                 <VList 
                     density="compact"
                     :items="data.listItem"
-                    
+                    @click="router.push('/fabric/fabric-registration')"
                 />
             </VCardText>
         </VCard>

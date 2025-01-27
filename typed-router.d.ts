@@ -69,6 +69,7 @@ declare module 'vue-router/auto-routes' {
     'dashboards-ecommerce': RouteRecordInfo<'dashboards-ecommerce', '/dashboards/ecommerce', Record<never, never>, Record<never, never>>,
     'extensions-swiper': RouteRecordInfo<'extensions-swiper', '/extensions/swiper', Record<never, never>, Record<never, never>>,
     'extensions-tour': RouteRecordInfo<'extensions-tour', '/extensions/tour', Record<never, never>, Record<never, never>>,
+    'fabric-fabric-registration': RouteRecordInfo<'fabric-fabric-registration', '/fabric/fabric-registration', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
     'forms-autocomplete': RouteRecordInfo<'forms-autocomplete', '/forms/autocomplete', Record<never, never>, Record<never, never>>,
     'forms-checkbox': RouteRecordInfo<'forms-checkbox', '/forms/checkbox', Record<never, never>, Record<never, never>>,
@@ -136,6 +137,5 @@ declare module 'vue-router/auto-routes' {
     'wizard-examples-checkout': RouteRecordInfo<'wizard-examples-checkout', '/wizard-examples/checkout', Record<never, never>, Record<never, never>>,
     'wizard-examples-create-deal': RouteRecordInfo<'wizard-examples-create-deal', '/wizard-examples/create-deal', Record<never, never>, Record<never, never>>,
     'wizard-examples-property-listing': RouteRecordInfo<'wizard-examples-property-listing', '/wizard-examples/property-listing', Record<never, never>, Record<never, never>>,
-    'wizard-examples-test': RouteRecordInfo<'wizard-examples-test', '/wizard-examples/test', Record<never, never>, Record<never, never>>,
   }
 }
