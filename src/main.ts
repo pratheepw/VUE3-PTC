@@ -28,6 +28,7 @@ const startApp=async ()=>{
         //if(accessToken && refreshToken){
             const authStore=useAuthStore()
             await authStore.refreshToken()
+            console.log('refresh token')
         //}
         
     } catch (error) {
