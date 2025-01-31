@@ -25,10 +25,10 @@ const startApp=async ()=>{
         const accessToken=useCookie('accessToken').value
         const refreshToken=useCookie('refreshToken').value
 
-        if(accessToken && refreshToken){
+        //if(accessToken && refreshToken){
             const authStore=useAuthStore()
             await authStore.refreshToken()
-        }
+        //}
         
     } catch (error) {
         console.log(error)

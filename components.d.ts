@@ -397,6 +397,5 @@ declare module 'vue' {
     VChipArrayRenderer: typeof import('./src/components/ag-grid/VChipArrayRenderer.vue')['default']
     VChipRenderer: typeof import('./src/components/ag-grid/VChipRenderer.vue')['default']
     VIconWithTextRenderer: typeof import('./src/components/ag-grid/VIconWithTextRenderer.vue')['default']
-    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }
