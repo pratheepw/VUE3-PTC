@@ -1,0 +1,5 @@
+.input-wrapper:hover {
+  cursor: pointer;
+  color: #4caf50;
+  opacity: 1;
+}

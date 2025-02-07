@@ -134,6 +134,9 @@ importers:
       vue3-tree-vue:
         specifier: ^2.0.12
         version: 2.0.13(vue@3.4.35(typescript@5.5.4))
+      vue3-treeview:
+        specifier: ^0.4.2
+        version: 0.4.2(typescript@5.5.4)
       vuetify:
         specifier: 3.6.13
         version: 3.6.13(typescript@5.5.4)(vite-plugin-vuetify@2.0.3)(vue-i18n@9.13.1(vue@3.4.35(typescript@5.5.4)))(vue@3.4.35(typescript@5.5.4))
@@ -2875,11 +2878,23 @@ packages:
   lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
 
+  lodash.eq@4.0.0:
+    resolution: {integrity: sha512-vbrJpXL6kQNG6TkInxX12DZRfuYVllSxhwYqjYB78g2zF3UI15nFO/0AgmZnZRnaQ38sZtjCiVjGr2rnKt4v0g==}
+
+  lodash.isnil@4.0.0:
+    resolution: {integrity: sha512-up2Mzq3545mwVnMhTDMdfoG1OurpA/s5t88JmQX809eH3C8491iu2sfKhTfhQtKY78oPNhiaHJUpT/dUDAAtng==}
+
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
+  lodash.tointeger@4.0.4:
+    resolution: {integrity: sha512-UQbTdxNHMm4jGlf+LtxB5ZPJFufuND2gZCYjMxSOUmcxfq350x9KnwL3EzxDDNth8fOZ9wpwDTGWZQnFgdV3gg==}
+
   lodash.truncate@4.4.2:
     resolution: {integrity: sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==}
+
+  lodash.uniqueid@4.0.1:
+    resolution: {integrity: sha512-GQQWaIeGlL6DIIr06kj1j6sSmBxyNMwI8kaX9aKpHR/XsMTiaXDVPNPAkiboOTK9OJpTJF/dXT3xYoFQnj386Q==}
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -4140,6 +4155,9 @@ packages:
     engines: {node: '>=12'}
     peerDependencies:
       vue: ^3.0.5
+
+  vue3-treeview@0.4.2:
+    resolution: {integrity: sha512-GR5qHMz78MzoBP6pf5dYJi/TEp18TWvLXt3x/EZvMIdhXNf2JWFHlXfiIaaaK+EU/j6kv2u6F5pmQ0t7fJ+jSw==}
 
   vue@3.4.35:
     resolution: {integrity: sha512-+fl/GLmI4GPileHftVlCdB7fUL4aziPcqTudpTGXCT8s+iZWuOCeNEB5haX6Uz2IpRrbEXOgIFbe+XciCuGbNQ==}
@@ -7232,9 +7250,17 @@ snapshots:
 
   lodash.clonedeep@4.5.0: {}
 
+  lodash.eq@4.0.0: {}
+
+  lodash.isnil@4.0.0: {}
+
   lodash.merge@4.6.2: {}
 
+  lodash.tointeger@4.0.4: {}
+
   lodash.truncate@4.4.2: {}
+
+  lodash.uniqueid@4.0.1: {}
 
   lodash@4.17.21: {}
 
@@ -8692,6 +8718,16 @@ snapshots:
   vue3-tree-vue@2.0.13(vue@3.4.35(typescript@5.5.4)):
     dependencies:
       vue: 3.4.35(typescript@5.5.4)
+
+  vue3-treeview@0.4.2(typescript@5.5.4):
+    dependencies:
+      lodash.eq: 4.0.0
+      lodash.isnil: 4.0.0
+      lodash.tointeger: 4.0.4
+      lodash.uniqueid: 4.0.1
+      vue: 3.4.35(typescript@5.5.4)
+    transitivePeerDependencies:
+      - typescript
 
   vue@3.4.35(typescript@5.5.4):
     dependencies:

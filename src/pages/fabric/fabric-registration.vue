@@ -1,7 +1,8 @@
 <script setup lang="ts">
-    import 'vue3-tree-vue/dist/style.css'
-    import tree from 'vue3-tree-vue'
-    import { VTreeview } from 'vuetify/labs/components';
+  import tree from 'vue3-treeview'
+  import '@styles/vue3-treeview.css'
+  //import "vue3-treeview/dist/style.css"
+    
 
     definePage({
         meta:{
@@ -10,36 +11,107 @@
         }
     })
 
-    interface TreeViewItem {
-        name: string;
-        id?: string | number;
-        children?: TreeViewItem[];
-        checked?: boolean;
-        selected?: boolean;
-        expanded?: boolean;
-        disableDragAndDrop?: boolean; // Disable drag and drop for a specific node.
-        disabled?: boolean;// When disabled, an item can neither be selected nor checked
-        meta?: any;// provides meta-data of any type per node.
-    }
+    const nodes2=ref({})
+    const config2=ref({
+      roots:[],
+      leaves:['fakeid'],
+      openedIcon:{
+          type:'class',
+          class:'tabler-folder-open me-2 text-warning',
+          style:'height: 22px; width: 22px;cursor:pointer;'
+        },
+        closedIcon:{
+          type:'class',
+          class:'tabler-folder me-2 text-warning',
+          style:'height: 22px; width: 22px;cursor:pointer;'
+        },
+        focusClass:'text-primary'
+    })
 
-    const items=ref<TreeViewItem[]>([])
     const root= "\\\\Domain\\FabricRegistration\\Registration"
     const res=await $api(`${import.meta.env.BASE_URL}api/fabric/fabricregistration?path=${root}&isroot=true`)
     const rootObject=JSON.parse(res)
-    items.value.push(...rootObject.directory,...rootObject.file)
+    rootObject.directory.forEach((d:any)=>{
+        nodes2.value[d.id]={
+          text:d.name,
+          path:d.meta.path,
+          children:['fakeid']
+        }
+        config2.value.roots.push(d.id)
+    })
 
-    // const onItemSelected=(item:TreeViewItem)=>{
-    //     console.log(item)
-    // }
+    const addServerNode=async (n:any)=>{
+        if(n.children.length>1) return
+        n.state.isLoading=true
 
-    // const onItemExpanded=async (expandedItem:TreeViewItem)=>{
-    //     const res=await $api(`${import.meta.env.BASE_URL}api/fabric/fabricregistration?path=${expandedItem.meta.path}&isroot=false`)
-    //     const lazyLoadedItems=JSON.parse(res)
-    //     expandedItem.children?.push(...lazyLoadedItems.directory,...lazyLoadedItems.file)
-    // }
+        console.log(n)
+        const res=await $api(`${import.meta.env.BASE_URL}api/fabric/fabricregistration?path=${n.path}&isroot=false`)
+        const lazyLoadedItems=JSON.parse(res)
+        lazyLoadedItems.directory.forEach((d:any)=>{
+          const id=d.id
+          const newNode={
+            text:d.name,
+            path:d.meta.path,
+            children:[],
+            state:{}
+          }
+          nodes2.value[id]=newNode
+          n.children.push(id)
+        })
+        lazyLoadedItems.file.forEach((f:any)=>{
+          const id=f.id
+          const newNode={
+            text:f.name,
+            path:f.meta.path,
+            extension:f.meta.extension,
+            state:{}
+          }
+          nodes2.value[id]=newNode
+          n.children.push(id)
+          config2.value.leaves.push(id)
+        })
 
-    //const initiallyOpen=ref(['public'])//ref(['\\\\Domain\\FabricRegistration\\Registration\\Regis 2012'])
-    /* const extensions=ref({
+        console.log(nodes2.value)
+        n.state.isLoading=false
+    }
+
+    const downloadFile=async (n:any)=>{
+        try {
+          const res=await $api(`${import.meta.env.BASE_URL}api/file/download?filename=${n.text}&filepath=${n.path}&fileextension=${n.extension}`)
+          const url=window.URL.createObjectURL(res)
+          const link=document.createElement('a')
+          link.href=url
+          link.setAttribute('download',n.text)
+          document.body.appendChild(link)
+          link.click()
+          link.remove()
+
+          setTimeout(()=>{
+            window.URL.revokeObjectURL(url)
+          },100)
+        } catch (error) {
+          console.log(error)
+        }
+
+    }
+
+    const extensionData=ref([
+      {name:'.pdf',icon:'tabler-file-type-pdf',color:'error'},
+      {name:'.xlsx',icon:'tabler-file-excel',color:'success'},
+      {name:'.xls',icon:'tabler-file-type-xls',color:'success'},
+      {name:'.docx',icon:'tabler-file-type-docx',color:'info'},
+      {name:'.doc',icon:'tabler-file-type-doc',color:'info'},  
+      {name:'.txt',icon:'tabler-file-type-txt',color:'secondary'},  
+      {name:'.png',icon:'tabler-file-type-png',color:'#E91E63'},  
+      {name:'.bmp',icon:'tabler-file-type-bmp',color:'#E91E63'},  
+      {name:'.jpg',icon:'tabler-file-type-jpg',color:'#E91E63'},
+      {name:'.gif',icon:'tabler-photo',color:'#009688'},
+      {name:'.rar',icon:'tabler-zip',color:'#795548'},  
+      {name:'.zip',icon:'tabler-zip',color:'#795548'},
+      {name:'.7z',icon:'tabler-zip',color:'#795548'}        
+    ])
+
+    const extensions=ref({
         pdf:'tabler-file-type-pdf',
         xlsx:'tabler-file-excel',
         xls:'tabler-file-type-xls',
@@ -53,93 +125,47 @@
         rar:'tabler-zip',
         zip:'tabler-zip',
         '7z':'tabler-zip'
-    }) */
+    }) 
 
-    const items2=ref([
-        {
-          id: 1,
-          title: 'Applications :',
-          children: [
-            { id: 2, title: 'Calendar : app' },
-            { id: 3, title: 'Chrome : app' },
-            { id: 4, title: 'Webstorm : app' },
-          ],
-        },
-        {
-          id: 5,
-          title: 'Documents :',
-          children: [
-            {
-              id: 6,
-              title: 'vuetify :',
-              children: [
-                {
-                  id: 7,
-                  title: 'src :',
-                  children: [
-                    { id: 8, title: 'index : ts' },
-                    { id: 9, title: 'bootstrap : ts' },
-                  ],
-                },
-              ],
-            },
-            {
-              id: 10,
-              title: 'material2 :',
-              children: [
-                {
-                  id: 11,
-                  title: 'src :',
-                  children: [
-                    { id: 12, title: 'v-btn : ts' },
-                    { id: 13, title: 'v-card : ts' },
-                    { id: 14, title: 'v-window : ts' },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 15,
-          title: 'Downloads :',
-          children: [
-            { id: 16, title: 'October : pdf' },
-            { id: 17, title: 'November : pdf' },
-            { id: 18, title: 'Tutorial : html' },
-          ],
-        },
-        {
-          id: 19,
-          title: 'Videos :',
-          children: [
-            {
-              id: 20,
-              title: 'Tutorials :',
-              children: [
-                { id: 21, title: 'Basic layouts : mp4' },
-                { id: 22, title: 'Advanced techniques : mp4' },
-                { id: 23, title: 'All about app : dir' },
-              ],
-            },
-            { id: 24, title: 'Intro : mov' },
-            { id: 25, title: 'Conference introduction : avi' },
-          ],
-        },
-      ])
+      // const config= ref( {
+      //   roots: ["id1", "id2"],
+      //   openedIcon:{
+      //     type:'class',
+      //     class:'tabler-chevron-down'
+      //   },
+      //   closedIcon:{
+      //     type:'class',
+      //     class:'tabler-chevron-right'
+      //   },
+      // })
 
-      const openNode=async (opened:any)=>{
-        if(opened.value){
-            const item=items.value.find(x=>x.id===opened.id)
-            console.log(item)
-            if(item?.children?.length===0){
-                const res=await $api(`${import.meta.env.BASE_URL}api/fabric/fabricregistration?path=${item?.meta.path}&isroot=false`)
-                const lazyLoadedItems=JSON.parse(res)
-                const index=items.value.findIndex(x=>x.id===opened.id)
-                items.value[index].children?.push(...lazyLoadedItems.directory,...lazyLoadedItems.file)
-            }
-        }
-      }
+      // const nodes=ref({
+      //   id1: {
+      //     text: "text1",
+      //     children: ['fakeid'],
+      //   },
+      //   id11: {
+      //     text: "text11",
+      //   },
+      //   id12: {
+      //     text: "text12",
+      //   },
+      //   id2: {
+      //     text: "text2",
+      //   },
+      // })
+
+      // interface TreeViewItem {
+    //     name: string;
+    //     id?: string | number;
+    //     children?: TreeViewItem[];
+    //     checked?: boolean;
+    //     selected?: boolean;
+    //     expanded?: boolean;
+    //     disableDragAndDrop?: boolean; // Disable drag and drop for a specific node.
+    //     disabled?: boolean;// When disabled, an item can neither be selected nor checked
+    //     meta?: any;// provides meta-data of any type per node.
+    // }
 </script>
 <template>
     <VCard
@@ -147,43 +173,21 @@
         subtitle="Browse files"
     >
         <VCardText>
-            <v-treeview 
-                :items="items"
-                item-title="name"
-                item-value="id"
-                color="warning"
-                density="compact"
-                @click:open="openNode"
-                collapse-icon="tabler-chevron-down"
-                expand-icon="tabler-chevron-right"
+            <tree 
+              :nodes="nodes2" 
+              :config="config2"
+              @nodeOpened="addServerNode"
+              @nodeFocus="downloadFile"
             >
-                <template 
-                    v-slot:prepend="{item,isActive}">
-                    <v-icon v-if="item.children" :icon="isActive?'tabler-folder-open':'tabler-folder'"></v-icon>
-                    <v-icon v-else icon="tabler-file"></v-icon>
-                </template>
-            </v-treeview>
-            <!-- <tree
-                :items="items"
-                :isCheckable="false"
-                :hideGuideLines="false"
-                :lazyLoad="true"
-                @onSelect="onItemSelected"
-                @onExpand="onItemExpanded"
-
-            >
-                <template #item-prepend-icon="treeViewItem">
-                    <VIcon
-                        v-if="treeViewItem.meta?.type==='folder'"
-                        icon="tabler-folder"
-                        class="text-warning"
-                    />
-                    <VIcon
-                        v-else
-                        icon="tabler-file-text"
-                    />
-                </template>
-            </tree> -->
+              <template #before-input="props">
+                <VIcon v-if="props.node.extension"
+                  :icon="extensionData.find(e=>e.name==props.node.extension)?.icon"
+                  :color="extensionData.find(e=>e.name==props.node.extension)?.color"
+                  class="mb-2"
+                  style="left:-10px;"
+                />
+              </template>
+            </tree>
         </VCardText>
     </VCard>
     
@@ -191,3 +195,104 @@
    
     
 </template>
+<style scoped>
+   /* .progress {
+  position: relative;
+  height: 4px;
+  display: block;
+  width: 100%;
+  background-color: #aab6fe;
+  border-radius: 2px;
+  background-clip: padding-box;
+  margin: 0.5rem 0 1rem 0;
+  overflow: hidden;
+}
+.progress .indeterminate {
+  background-color: #3f51b5;
+}
+.progress .indeterminate:before {
+  content: "";
+  position: absolute;
+  background-color: inherit;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  will-change: left, right;
+  -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395)
+    infinite;
+  animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+.progress .indeterminate:after {
+  content: "";
+  position: absolute;
+  background-color: inherit;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  will-change: left, right;
+  -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1)
+    infinite;
+  animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1)
+    infinite;
+  -webkit-animation-delay: 1.15s;
+  animation-delay: 1.15s;
+}
+
+@-webkit-keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+@-webkit-keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+} */
+
+</style>

@@ -139,6 +139,7 @@
             title:'Fabric Registration',
             to:'/fabric/fabric-registration',
             props:{
+                prependIcon:'tabler-arrow-badge-right',
                 disabled:false
             },
         },

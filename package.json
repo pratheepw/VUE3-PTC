@@ -53,6 +53,7 @@
     "vue3-apexcharts": "1.5.3",
     "vue3-perfect-scrollbar": "2.0.0",
     "vue3-tree-vue": "^2.0.12",
+    "vue3-treeview": "^0.4.2",
     "vuetify": "3.6.13",
     "webfontloader": "1.6.28"
   },

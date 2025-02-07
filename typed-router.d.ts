@@ -70,6 +70,7 @@ declare module 'vue-router/auto-routes' {
     'extensions-swiper': RouteRecordInfo<'extensions-swiper', '/extensions/swiper', Record<never, never>, Record<never, never>>,
     'extensions-tour': RouteRecordInfo<'extensions-tour', '/extensions/tour', Record<never, never>, Record<never, never>>,
     'fabric-fabric-registration': RouteRecordInfo<'fabric-fabric-registration', '/fabric/fabric-registration', Record<never, never>, Record<never, never>>,
+    'fabric-fabric-registration-v1': RouteRecordInfo<'fabric-fabric-registration-v1', '/fabric/fabric-registrationV1', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
     'forms-autocomplete': RouteRecordInfo<'forms-autocomplete', '/forms/autocomplete', Record<never, never>, Record<never, never>>,
     'forms-checkbox': RouteRecordInfo<'forms-checkbox', '/forms/checkbox', Record<never, never>, Record<never, never>>,
