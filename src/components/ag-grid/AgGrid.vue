@@ -9,6 +9,7 @@
     const columnDefs=defineModel<ColDef[]>('columnDefs')
     const rowData=defineModel<any[]|null>('rowData')
     const autoSizeStrategy = ref({})
+    const pinnedBottomRowData=defineModel<any[]>('pinnedBottomRowData')
     
     const props=defineProps({
         rowHeight:Number
@@ -46,6 +47,8 @@
         :autoSizeStrategy="autoSizeStrategy"
         :class=myStore.agGridthemeClass
         :row-height="props.rowHeight"
+        :suppressColumnVirtualisation="true"
+        :pinnedBottomRowData="pinnedBottomRowData"
         @grid-ready="onGridReady"
 
     />

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
+
     const router=useRouter()
 
     const accountData=[
@@ -14,6 +16,7 @@
             title:'Inventory Aging',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -21,6 +24,7 @@
             title:'Export Account',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -28,6 +32,7 @@
             title:'Stock Management',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -35,6 +40,7 @@
             title:'Stock Movement',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -42,6 +48,7 @@
             title:'Received Amount by Delivery Date',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -49,6 +56,7 @@
             title:'Estimation of Formula Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -75,6 +83,7 @@
             title:'Fabric Dimension',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -82,6 +91,7 @@
             title:'Fabric Ingredient',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -89,6 +99,7 @@
             title:'Fabric Standard',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -104,6 +115,7 @@
             title:'Fabric Order Balance',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -111,6 +123,7 @@
             title:'Yarn Test Report of BOKEN',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -118,6 +131,7 @@
             title:'Fabric Price Check',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -125,6 +139,7 @@
             title:'Lot Movement',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -132,6 +147,7 @@
             title:'PO Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -139,7 +155,7 @@
             title:'Fabric Registration',
             to:'/fabric/fabric-registration',
             props:{
-                prependIcon:'tabler-arrow-badge-right',
+                prependIcon:'tabler-point',
                 disabled:false
             },
         },
@@ -147,6 +163,7 @@
             title:'Fabric Order Movement',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -157,6 +174,7 @@
             title:'Monthly Yarn',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -164,6 +182,7 @@
             title:'Balance',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -171,6 +190,7 @@
             title:'Check In/Out/Return',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -178,6 +198,7 @@
             title:'ใบสรุป',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -193,6 +214,7 @@
             title:'Dead Stock',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -200,6 +222,7 @@
             title:'Yarn Movement',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -239,6 +262,7 @@
             title:'Knit Schedule',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -246,6 +270,7 @@
             title:'Check In',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -253,6 +278,7 @@
             title:'Check Out',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -260,6 +286,7 @@
             title:'Balance',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -267,20 +294,23 @@
             title:'Yarn Consumption (Plan)',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
         {
             title:'Search Lot No.',
-            to:'',
+            to:'/fabric/gfsearchlot',
             props:{
-                disabled:true
+                prependIcon:'tabler-point',
+                disabled:false
             },
         },
         {
             title:'Delete Barcode',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -288,6 +318,7 @@
             title:'Search Grige Fabric by Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -295,6 +326,7 @@
             title:'Greige Fabric Quality Data',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -302,6 +334,7 @@
             title:'Estimation of Formula Greige Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -309,6 +342,7 @@
             title:'Search Greige Fabric by Lot No.',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -316,6 +350,7 @@
             title:'Monthly Griege Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -323,6 +358,7 @@
             title:'WIP',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -333,6 +369,7 @@
             title:'Dyeing Schedule',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -340,6 +377,7 @@
             title:'Shrinkage',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -347,6 +385,7 @@
             title:'Preparation Order',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -354,6 +393,7 @@
             title:'Temperature and Humidity Control',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -380,6 +420,7 @@
             title:'Meeting Room Schedule',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -390,6 +431,7 @@
             title:'Dyeing Delivery Report',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -397,6 +439,7 @@
             title:'Daily Delivery',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -404,6 +447,7 @@
             title:'Daily Defect',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -411,6 +455,7 @@
             title:'ตรวจสอบผ้าสำเร็จรูป',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -418,6 +463,7 @@
             title:'Stock Finish Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -425,6 +471,7 @@
             title:'Finish Fabric Invoice Delivery',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -432,6 +479,7 @@
             title:'Monthly Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -442,6 +490,7 @@
             title:'Check In',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -449,6 +498,7 @@
             title:'Check Out',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -456,6 +506,7 @@
             title:'Balance',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -463,6 +514,7 @@
             title:'Search Finish Fabric',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -470,6 +522,7 @@
             title:'Stock Card',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -477,6 +530,7 @@
             title:'PTC Internal Testing',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -487,6 +541,7 @@
             title:'TPiCS Contract',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -502,6 +557,7 @@
             title:'Inter Sale Order Balance',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -509,6 +565,7 @@
             title:'Find Fabric Code',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -516,6 +573,7 @@
             title:'Order Balance',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -526,6 +584,7 @@
             title:'Sale Report (Daily Sale Report)',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -536,6 +595,7 @@
             title:'Production Daily Report by Qty,Amount',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -543,6 +603,7 @@
             title:'Line Profit Report',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -550,6 +611,7 @@
             title:'Sewing Loss Report',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -557,6 +619,7 @@
             title:'% Cutting - Sewing - Packing',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -564,6 +627,7 @@
             title:'Solution Activity',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -574,6 +638,7 @@
             title:'WIP Finished Goods Inter',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -581,6 +646,7 @@
             title:'WIP Finished Goods Inter (Balance)',
             to:'',
             props:{
+                prependIcon:'tabler-point',
                 disabled:true
             },
         },
@@ -709,9 +775,19 @@
             <VCardText>
                 <VList 
                     density="compact"
-                    :items="data.listItem"
-                    @click="router.push('/fabric/fabric-registration')"
-                />
+                >
+                    <VListItem
+                        v-for="item in data.listItem"
+                        :key="item.title"
+                        :to="item.to"
+                        :disabled="item.props.disabled"
+                        :title="item.title"
+                        :prepend-icon="item.props.prependIcon"
+                    >
+
+                    </VListItem>
+                </VList>
+                    
             </VCardText>
         </VCard>
     </VCol>
