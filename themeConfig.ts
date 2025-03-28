@@ -12,7 +12,7 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
   app: {
     title: 'parfun textile',
     logo: h('div', { innerHTML: logo, style: 'line-height:0; color: rgb(var(--v-global-theme-primary))' }),
-    contentWidth: ContentWidth.Boxed,
+    contentWidth: ContentWidth.Fluid,
     contentLayoutNav: AppContentLayoutNav.Vertical,
     overlayNavFromBreakpoint: breakpointsVuetifyV3.lg - 1, // 1 for matching with vuetify breakpoint. Docs: https://next.vuetifyjs.com/en/features/display-and-platform/
     i18n: {
@@ -46,7 +46,7 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
   },
   footer: { type: FooterType.Static },
   verticalNav: {
-    isVerticalNavCollapsed: false,
+    isVerticalNavCollapsed: true,
     defaultNavItemIconProps: { icon: 'tabler-circle' },
     isVerticalNavSemiDark: false,
   },
@@ -64,8 +64,8 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
     chevronDown: { icon: 'tabler-chevron-down' },
     chevronRight: { icon: 'tabler-chevron-right', size: 20 },
     close: { icon: 'tabler-x', size: 20 },
-    verticalNavPinned: { icon: 'tabler-circle-dot', size: 20 },
-    verticalNavUnPinned: { icon: 'tabler-circle', size: 20 },
+    verticalNavPinned: { icon: 'tabler-pinned', size: 20 },
+    verticalNavUnPinned: { icon: 'tabler-pinned-off', size: 20 },
     sectionTitlePlaceholder: { icon: 'tabler-minus' },
   },
 

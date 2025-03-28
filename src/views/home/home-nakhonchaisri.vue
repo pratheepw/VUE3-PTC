@@ -81,10 +81,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
     const fabricData=[
         {
             title:'Fabric Dimension',
-            to:'',
+            to:'/fabric/fabric-dimension',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {

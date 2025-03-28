@@ -17,3 +17,6 @@
 .text-small {
   font-size: 11.9px;
 }
+.text-bold {
+  font-weight: bold;
+}

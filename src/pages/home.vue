@@ -17,5 +17,4 @@
   <HomeNakhonchaisri/>
   <HomeSales1 />
   <HomeSales2 />
-
 </template>

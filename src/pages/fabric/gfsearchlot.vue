@@ -65,6 +65,9 @@
         {
             field:'weight',
             cellDataType:'number',type:'rightAligned',
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {field:'color'},
         {headerName:'Order No.', field:'fabOrderNo'},
@@ -72,61 +75,96 @@
             headerName:'1', field:'k1',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'2', field:'k2',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'3', field:'k3',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'4', field:'k4',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'5', field:'k5',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'6', field:'k6',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'7', field:'k7',
             cellDataType:'number',type:'rightAligned',
-            cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellRenderer:(params:any)=>params.value===0?'':params.value,cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'8', field:'k8',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'9', field:'k9',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'10', field:'k10',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'11', field:'k11',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             field:'iso',
             cellDataType:'number',type:'rightAligned',
             cellRenderer:(params:any)=>params.value===0?'':params.value,
+            cellClassRules:{
+                'text-bold':(params:any)=>params.node.rowPinned
+            }
         },
         {
             headerName:'Employee', field:'empName',
@@ -194,7 +232,7 @@
                 </VCol>
                 <VCol 
                     cols="12" md="6" lg="2"
-                    class=" ms-auto d-flex justify-end"
+                    class="d-flex justify-end ms-auto"
                 >
                     <VChip 
                         v-if="rowFooter.totalRows"
