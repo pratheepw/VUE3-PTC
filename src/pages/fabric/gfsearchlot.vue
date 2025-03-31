@@ -1,5 +1,10 @@
 <script setup lang="ts">
-    import AgGrid from '@/components/ag-grid/AgGrid.vue';
+    import { AgGridVue } from 'ag-grid-vue3'
+    import {ColDef,GridApi,GridReadyEvent,IDatasource,IGetRowsParams,RowModelType,SizeColumnsToFitGridStrategy,SizeColumnsToFitProvidedWidthStrategy,SizeColumnsToContentStrategy} from 'ag-grid-community'
+
+    import { useConfigStore } from '@core/stores/config'
+    import { useMyStore } from '@/stores/my'
+    import { useDisplay } from 'vuetify'
 
     definePage({
         meta:{
@@ -8,48 +13,26 @@
         }
     })
 
+    // 👉 Set agGrid theme
+    const myStore = useMyStore()
+    const configStore=useConfigStore()
+    watch(()=>configStore.theme,(newValue,oldValue)=>{
+        const userPreferredColorScheme = usePreferredColorScheme()
+        const userTheme=userPreferredColorScheme.value==='dark'?'ag-theme-quartz-dark':'ag-theme-quartz'
+        myStore.agGridthemeClass=configStore.theme==='system'?userTheme:configStore.theme==='dark'? 'ag-theme-quartz-dark':'ag-theme-quartz'
+    })
+    // 👉 Set current page title
+    myStore.currentPageTitle='Greige Fabric Stock / Search Lot No.'
+
     const ddlType=ref('Lot No')
     const txtSearch=ref('')
     const rowData=ref([])
-    const rowFooter=ref({})
+    const rowFooter=ref(null)
+    const pinnedBottomRowData=ref<any[]>([])
     const loadings=ref<boolean[]>([])
 
-    // 👉 Fetching data
-    const fetchData=async(exportExcel:boolean)=>{
-        try {
-            if(exportExcel){
-                loadings.value[1]=true
-                const res = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getgfsearchlot?ddlType=${ddlType.value}&txtSearch=${txtSearch.value}&exportExcel=${exportExcel}`)
-                const url=window.URL.createObjectURL(res)
-                const link=document.createElement('a')
-                link.href=url
-                link.setAttribute('download','gfsearchlot.xlsx')
-                document.body.appendChild(link)
-                link.click()
-                link.remove()
-
-                setTimeout(()=>{
-                    window.URL.revokeObjectURL(url)
-                },100)
-                loadings.value[1]=false
-            }else{
-                loadings.value[0]=true
-                const {data,footer} = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getgfsearchlot?ddlType=${ddlType.value}&txtSearch=${txtSearch.value}&exportExcel=${exportExcel}`)
-                rowData.value=data
-                rowFooter.value=footer
-                loadings.value[0]=false
-            }
-            
-        } catch (error) {
-            loadings.value[0]=false
-            loadings.value[1]=false
-            console.log(error)
-        }
-        
-    }
-    
-
     // 👉 agGrid
+    const gridApi=shallowRef<GridApi|null>(null)
     const columnDefs=ref([
         {headerName:'Issue No.',field:'issue'},
         {
@@ -187,12 +170,133 @@
         }
 
     ])
+    const defaultColDef = ref<ColDef>({
+      sortable: false,
+      resizable:true,
+      suppressHeaderMenuButton:true,
+      width:100,
+    });
+    
+    const autoSizeStrategy = ref<
+      | SizeColumnsToFitGridStrategy
+      | SizeColumnsToFitProvidedWidthStrategy
+      | SizeColumnsToContentStrategy
+    >({
+      type: "fitCellContents",
+    })
+
+    const onGridReady=(params:GridReadyEvent)=>{
+        gridApi.value=params.api
+    }
+
+    // 👉 Fetching data
+    const fetchData=async()=>{
+        try {
+            loadings.value[0]=true
+            const {data,footer} = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getgfsearchlot?ddlType=${ddlType.value}&txtSearch=${txtSearch.value}&exportExcel=false`)
+            rowData.value=data
+            rowFooter.value=footer
+            if(footer){
+                pinnedBottomRowData.value=[{
+                    weight:footer.weight,
+                    k1:footer.k1,
+                    k2:footer.k2,
+                    k3:footer.k3,
+                    k4:footer.k4,
+                    k5:footer.k5,
+                    k6:footer.k6,
+                    k7:footer.k7,
+                    k8:footer.k8,
+                    k9:footer.k9,
+                    k10:footer.k10,
+                    k11:footer.k11,
+                    iso:footer.iso
+                }]
+            }else{
+                pinnedBottomRowData.value=[{
+                    weight:0,
+                    k1:0,
+                    k2:0,
+                    k3:0,
+                    k4:0,
+                    k5:0,
+                    k6:0,
+                    k7:0,
+                    k8:0,
+                    k9:0,
+                    k10:0,
+                    k11:0,
+                    iso:0
+                }]
+            }
+            gridApi.value?.autoSizeAllColumns()
+            loadings.value[0]=false
+        } catch (error) {
+            loadings.value[0]=false
+            console.log(error)
+        }
+    }
+    // 👉 Export Excel
+    const exportExcel=async()=>{
+        try {
+            loadings.value[1]=true
+            const res = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getgfsearchlot?ddlType=${ddlType.value}&txtSearch=${txtSearch.value}&exportExcel=true`)
+            const url=window.URL.createObjectURL(res)
+            const link=document.createElement('a')
+            link.href=url
+            link.setAttribute('download','gfsearchlot.xlsx')
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+
+            setTimeout(()=>{
+                window.URL.revokeObjectURL(url)
+            },100)
+            loadings.value[1]=false
+        } catch (error) {
+            loadings.value[1]=false
+            console.log(error)
+        }
+        
+    }
+
+    onMounted(()=>{
+        const {width,height}=useWindowSize()
+        const {name}=useDisplay()
+        const gridHeight=computed(()=>{
+            let headerHeight=0
+            switch(name.value){
+                case 'xs': 
+                    headerHeight= 220
+                    break
+                case 'sm': 
+                    headerHeight= 220
+                    break
+                case 'md': 
+                    headerHeight= 170
+                    break
+                case 'lg': 
+                    headerHeight= 170
+                    break
+                case 'xl': 
+                    headerHeight= 235
+                    break
+                case 'xxl': 
+                    headerHeight= 235
+                    break
+            }
+            return height.value-headerHeight
+        })
+        gridApi.value?.setGridOption('domLayout','normal')
+        document.getElementById('myGrid')!.style.height=gridHeight.value+'px'
+    })
+    
 </script>
 <template>
     <VCard>
-        <VCardText class="px-2 py-2">
+        <VCardText class="px-1 py-1">
             <VRow class="my-1">
-                <VCol cols="12" md="6" lg="2">
+                <VCol cols="6" md="3" lg="2" class="pb-1">
                     <VSelect
                         v-model="ddlType"
                         :items="['Lot No','Fabric Order No']"
@@ -200,23 +304,23 @@
                         density="compact"
                     />
                 </VCol>
-                <VCol cols="12" md="6" lg="2">
+                <VCol cols="6" md="3" lg="2" class="pb-1">
                     <AppTextField
                         id="txtSearch"
                         v-model="txtSearch"
                         density="compact"
                     />
                 </VCol>
-                <VCol cols="12" md="6" lg="3">
+                <VCol cols="8" md="4" lg="3" class="pt-1 pt-md-3 pb-md-0">
                     <VBtn
                         size="small"
                         color="primary"
                         :loading="loadings[0]"
                         :disabled="loadings[0]"
-                        @click="fetchData(false)"
+                        @click="fetchData()"
                     >
                         <VIcon start icon="tabler-search"/>    
-                    Search
+                        Search
                     </VBtn>
                     <VBtn
                         size="small"
@@ -224,44 +328,41 @@
                         class="ms-1"
                         :loading="loadings[1]"
                         :disabled="loadings[1]"
-                        @click="fetchData(true)"
+                        @click="exportExcel()"
                     >
                         <VIcon start icon="tabler-file-spreadsheet"/>    
-                    Export
+                        Export Excel
                     </VBtn>
                 </VCol>
                 <VCol 
-                    cols="12" md="6" lg="2"
-                    class="d-flex justify-end ms-auto"
+                    cols="4" md="2" lg="2"
+                    class="d-flex justify-end ms-auto pt-1 pt-md-3 pb-md-0"
                 >
                     <VChip 
-                        v-if="rowFooter.totalRows"
+                        v-if="rowFooter"
                         color="#E91E63"
                     >
-                        {{ rowFooter.totalRows}} rows
+                        {{ new Intl.NumberFormat().format(rowFooter.totalRows)}} rows
+                    </VChip>
+                    <VChip
+                        v-else
+                        color="#E91E63">
+                        0 rows
                     </VChip>
                 </VCol>
             </VRow>
-            <AgGrid
+            <AgGridVue
+                id="myGrid"
+                @gridReady="onGridReady"
+                :autoSizeStrategy="autoSizeStrategy"
+                :class="myStore.agGridthemeClass"
                 :columnDefs="columnDefs"
-                :rowData="rowData"
+                :defaultColDef="defaultColDef"
+                :headerHeight="35"
+                :pinnedBottomRowData="pinnedBottomRowData"
                 :row-height="35"
-                :pinned-bottom-row-data="[{
-                    weight:rowFooter.weight,
-                    k1:rowFooter.k1,
-                    k2:rowFooter.k2,
-                    k3:rowFooter.k3,
-                    k4:rowFooter.k4,
-                    k5:rowFooter.k5,
-                    k6:rowFooter.k6,
-                    k7:rowFooter.k7,
-                    k8:rowFooter.k8,
-                    k9:rowFooter.k9,
-                    k10:rowFooter.k10,
-                    k11:rowFooter.k11,
-                    iso:rowFooter.iso
-                }]"
-                style="height: 450px;"
+                :rowData="rowData"
+                :suppressColumnVirtualisation="true"
             />
         </VCardText>
          

@@ -6,6 +6,7 @@
 
     import { useConfigStore } from '@core/stores/config'
     import { useMyStore } from '@/stores/my'
+    import { useDisplay } from 'vuetify'
 
     definePage({
         meta:{
@@ -22,6 +23,8 @@
         const userTheme=userPreferredColorScheme.value==='dark'?'ag-theme-quartz-dark':'ag-theme-quartz'
         myStore.agGridthemeClass=configStore.theme==='system'?userTheme:configStore.theme==='dark'? 'ag-theme-quartz-dark':'ag-theme-quartz'
     })
+    // 👉 Set current page title
+    myStore.currentPageTitle='Fabric / Fabric Dimension'
 
     const rowFooter=ref({})
     const loadings=ref<boolean[]>([])
@@ -217,7 +220,6 @@
     })
 
     const onGridReady=(params:GridReadyEvent)=>{
-        console.log(params)
         gridApi.value=params.api
 
         const dataSource:IDatasource={
@@ -266,6 +268,37 @@
         
     }
 
+    onMounted(()=>{
+        const {width,height}=useWindowSize()
+        const {name}=useDisplay()
+        const gridHeight=computed(()=>{
+            let headerHeight=0
+            switch(name.value){
+                case 'xs': 
+                    headerHeight= 160
+                    break
+                case 'sm': 
+                    headerHeight= 160
+                    break
+                case 'md': 
+                    headerHeight= 160
+                    break
+                case 'lg': 
+                    headerHeight= 160
+                    break
+                case 'xl': 
+                    headerHeight= 160
+                    break
+                case 'xxl': 
+                    headerHeight= 160
+                    break
+            }
+            return height.value-headerHeight
+        })
+        gridApi.value?.setGridOption('domLayout','normal')
+        document.getElementById('myGrid')!.style.height=gridHeight.value+'px'
+    })
+
     defineExpose({
         DropDownFloatingFilter
     })
@@ -274,11 +307,13 @@
     <VCard>
         <VCardText class="px-1 pt-1 pb-0">
             <ag-grid-vue
+                id="myGrid"
                 @gridReady="onGridReady"
                 :autoSizeStrategy="autoSizeStrategy"
                 :class=myStore.agGridthemeClass
                 :columnDefs="columnDefs"
                 :defaultColDef="defaultColDef"
+                :headerHeight="35"
                 :row-height="35"
                 :suppressColumnVirtualisation="true"
 
@@ -289,11 +324,9 @@
                 :maxConcurrentDatasourceRequests="maxConcurrentDatasourceRequests"
                 :infiniteInitialRowCount="infiniteInitialRowCount"
                 :maxBlocksInCache="maxBlocksInCache"
-                
-                style="height: 480px"
             />
             <VRow class="my-1">
-                <VCol cols="12" md="6" lg="3" class="py-1">
+                <VCol cols="6" class="py-1">
                     <VBtn
                         size="small"
                         color="success"
@@ -307,7 +340,7 @@
                     </VBtn>
                 </VCol>
                 <VCol 
-                    cols="12" md="6" lg="2"
+                    cols="6"
                     class="d-flex justify-end ms-auto py-1"
                 >
                     <VChip 

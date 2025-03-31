@@ -13,6 +13,8 @@ import NavBarI18n from '@core/components/I18n.vue'
 
 // @layouts plugin
 import { VerticalNavLayout } from '@layouts'
+import NavBarTitle from './NavBarCurrentPage.vue'
+import NavBarCurrentPage from './NavBarCurrentPage.vue'
 </script>
 
 <template>
@@ -30,8 +32,8 @@ import { VerticalNavLayout } from '@layouts'
             icon="tabler-menu-2"
           />
         </IconBtn>
-
-        <NavSearchBar class="ms-lg-n3" />
+        <NavBarCurrentPage/>
+        <!-- <NavSearchBar class="ms-lg-n3" /> -->
 
         <VSpacer />
 
@@ -41,7 +43,7 @@ import { VerticalNavLayout } from '@layouts'
         />
         <NavbarThemeSwitcher />
         <NavbarShortcuts />
-        <NavBarNotifications class="me-1" />
+        <!-- <NavBarNotifications class="me-1" /> -->
         <UserProfile/>
       </div>
     </template>

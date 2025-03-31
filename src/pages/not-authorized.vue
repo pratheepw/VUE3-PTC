@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
   definePage({
-    alias: '/pages/misc/not-authorized',
+    // alias: '/pages/misc/not-authorized',
     meta: {
       layout: 'blank',
       public: true,
@@ -20,7 +20,7 @@
 
     <VBtn
       class="mb-11"
-      to="/"
+      to="/home"
     >
       Back To Home
     </VBtn>

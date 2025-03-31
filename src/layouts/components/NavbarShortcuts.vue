@@ -1,17 +1,20 @@
 <script setup lang="ts">
+import { SubTitle } from 'chart.js';
+import { title } from 'process';
+
 const shortcuts = [
-  {
-    icon: 'tabler-calendar',
-    title: 'Calendar',
-    subtitle: 'Appointments',
-    to: { name: 'apps-calendar' },
-  },
-  {
-    icon: 'tabler-file-dollar',
-    title: 'Invoice App',
-    subtitle: 'Manage Accounts',
-    to: { name: 'apps-invoice-list' },
-  },
+  // {
+  //   icon: 'tabler-calendar',
+  //   title: 'Calendar',
+  //   subtitle: 'Appointments',
+  //   to: { name: 'apps-calendar' },
+  // },
+  // {
+  //   icon: 'tabler-file-dollar',
+  //   title: 'Invoice App',
+  //   subtitle: 'Manage Accounts',
+  //   to: { name: 'apps-invoice-list' },
+  // },
   {
     icon: 'tabler-user',
     title: 'Users',
@@ -21,21 +24,28 @@ const shortcuts = [
   {
     icon: 'tabler-users',
     title: 'Role Management',
-    subtitle: 'Permission',
-    to: { name: 'apps-roles' },
+    subtitle: 'Manage Roles',
+    to: { name: 'user-roles' },
   },
   {
-    icon: 'tabler-device-desktop-analytics',
-    title: 'Dashboard',
-    subtitle: 'Dashboard Analytics',
-    to: { name: 'dashboards-analytics' },
-  },
-  {
-    icon: 'tabler-settings',
-    title: 'Settings',
-    subtitle: 'Account Settings',
-    to: { name: 'pages-account-settings-tab', params: { tab: 'account' } },
-  },
+    icon:'tabler-lock',
+    title:'Permission',
+    subtitle:'Manage Permissions',
+    to:{name:'user-permissions'}
+  }
+  // {
+  //   icon: 'tabler-device-desktop-analytics',
+  //   title: 'Dashboard',
+  //   subtitle: 'Dashboard Analytics',
+  //   to: { name: 'dashboards-analytics' },
+  // },
+
+  // {
+  //   icon: 'tabler-settings',
+  //   title: 'Settings',
+  //   subtitle: 'Account Settings',
+  //   to: { name: 'pages-account-settings-tab', params: { tab: 'account' } },
+  // },
 
 ]
 </script>

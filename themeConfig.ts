@@ -24,16 +24,16 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
           i18nLang: 'en',
           isRTL: false,
         },
-        {
-          label: 'Thai',
-          i18nLang: 'th',
-          isRTL: false,
-        },
-        {
-          label: 'Japanese',
-          i18nLang: 'ja',
-          isRTL: true,
-        },
+        // {
+        //   label: 'Thai',
+        //   i18nLang: 'th',
+        //   isRTL: false,
+        // },
+        // {
+        //   label: 'Japanese',
+        //   i18nLang: 'ja',
+        //   isRTL: true,
+        // },
       ],
     },
     theme: 'system',

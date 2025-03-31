@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import tree from 'vue3-treeview'
   import '@styles/vue3-treeview.css'
+  import { useMyStore } from '@/stores/my'
   //import "vue3-treeview/dist/style.css"
     
 
@@ -10,6 +11,10 @@
             subject:'fabric-registration'
         }
     })
+
+    // 👉 Set current page title
+    const myStore=useMyStore()
+    myStore.currentPageTitle='Fabric / Fabric Registration'
 
     const nodes2=ref({})
     const config2=ref({
