@@ -284,10 +284,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Balance',
-            to:'',
+            to:'/greige-fabric/gfbalance',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {
@@ -300,7 +300,7 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Search Lot No.',
-            to:'/fabric/gfsearchlot',
+            to:'/greige-fabric/gfsearchlot',
             props:{
                 prependIcon:'tabler-point',
                 disabled:false

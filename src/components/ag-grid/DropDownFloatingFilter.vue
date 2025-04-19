@@ -1,6 +1,6 @@
 <template>
   <VSelect
-    class="my-2"
+    class="mt-0"
     variant="outlined"
     density="compact"
     :items="items"
@@ -14,7 +14,7 @@
     const props=defineProps({params:Object})
     const currentValue=ref({'text':'All','value':''})
     const items=ref([])
-    
+
     const onDropdownlistChanged=(value:any)=>{
         currentValue.value={'text':value.text,'value':value.value}
         props.params.parentFilterInstance((instance:any)=>{
@@ -28,6 +28,7 @@
     
     onBeforeMount(()=>{
         items.value=props.params.values
+
     })
 
 </script>

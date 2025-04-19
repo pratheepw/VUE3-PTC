@@ -14,9 +14,16 @@
   --ag-odd-row-background-color: #343851;
   --ag-header-column-resize-handle-color: #505466;
 }
+
 .text-small {
   font-size: 11.9px;
 }
 .text-bold {
   font-weight: bold;
+}
+.rotate-text {
+  writing-mode: vertical-lr;
+  -ms-writing-mode: tb-lr;
+  /*transform:scale(-1);*/
+  line-height: 2em;
 }
