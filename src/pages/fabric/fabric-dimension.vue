@@ -313,7 +313,7 @@
                 :class=myStore.agGridthemeClass
                 :columnDefs="columnDefs"
                 :defaultColDef="defaultColDef"
-                :headerHeight="35"
+                :headerHeight="38"
                 :row-height="35"
                 :suppressColumnVirtualisation="true"
 

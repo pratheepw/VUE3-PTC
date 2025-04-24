@@ -71,6 +71,7 @@ declare module 'vue-router/auto-routes' {
     'extensions-tour': RouteRecordInfo<'extensions-tour', '/extensions/tour', Record<never, never>, Record<never, never>>,
     'fabric-fabric-dimension': RouteRecordInfo<'fabric-fabric-dimension', '/fabric/fabric-dimension', Record<never, never>, Record<never, never>>,
     'fabric-fabric-registration': RouteRecordInfo<'fabric-fabric-registration', '/fabric/fabric-registration', Record<never, never>, Record<never, never>>,
+    'fabric-wip-daily-delivery': RouteRecordInfo<'fabric-wip-daily-delivery', '/fabric-wip/daily-delivery', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,
     'forms-autocomplete': RouteRecordInfo<'forms-autocomplete', '/forms/autocomplete', Record<never, never>, Record<never, never>>,
     'forms-checkbox': RouteRecordInfo<'forms-checkbox', '/forms/checkbox', Record<never, never>, Record<never, never>>,

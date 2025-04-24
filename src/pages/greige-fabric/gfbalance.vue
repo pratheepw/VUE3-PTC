@@ -87,25 +87,25 @@
         {
             headerName:'Qty',field:'qty',type:'rightAligned',
             cellRenderer:(params:any)=>{
-                return (params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             }
         },
         {
             headerName:'Weight',field:'weight',type:'rightAligned',
             cellRenderer:(params:any)=>{
-                return (params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             }
         },
         {
             headerName:'Amount',field:'amount',type:'rightAligned',
             cellRenderer:(params:any)=>{
-                return (params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             }
         },
         {
             headerName:'11',field:'knitHole',type:'rightAligned',
             cellRenderer:(params:any)=>{
-                return (params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             }
         },
         {
@@ -165,7 +165,7 @@
         {
             headerName:'Weight',field:'weight',type:'rightAligned',
             cellRenderer:(params:any)=>{
-                return (params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             }
         },
         {
@@ -174,7 +174,7 @@
                 if(params.node.rowPinned=='bottom')
                     return ''
                 else
-                    return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                    return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
@@ -209,77 +209,77 @@
             headerName:'1',field:'knitCircle',type:'rightAligned',headerTooltip:'รูกลม (Round Hole)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'2',field:'knitOval',type:'rightAligned',headerTooltip:'รูรี (Oval Hole)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'3',field:'knitBrokeNeedle',type:'rightAligned',headerTooltip:'เข็มหัก (Broken Needle)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'4',field:'knitHook',type:'rightAligned',headerTooltip:'รอยเกี่ยวผ้า (Scratch)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'5',field:'knitBad',type:'rightAligned',headerTooltip:'รอยฟันหนู (Fabric Stain)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'6',field:'dust',type:'rightAligned',headerTooltip:'ฝุ่น (Dust)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'7',field:'knitDirtyMachine',type:'rightAligned',headerTooltip:'รอยสปันขาด (Dirty Machine)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'8',field:'knitDirty',type:'rightAligned',headerTooltip:'เปื้อน (Dirty)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'9',field:'knitHorizontal',type:'rightAligned',headerTooltip:'เป็นเม็ดกับ เศษด้ายปน',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'10',field:'knitConnectEnd',type:'rightAligned',headerTooltip:'ต่อปลาย (Ending Joint)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'11',field:'knitHole',type:'rightAligned',headerTooltip:'ตามด (Knit Hole)',
             //headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
@@ -326,6 +326,7 @@
 
     // 👉 Fetching data -- Summary
     const fetchData=async()=>{
+        loadings.value[0]=true
         const dataSource:IDatasource={
             rowCount:undefined,
             getRows:async(params:IGetRowsParams)=>{
@@ -345,15 +346,18 @@
                     params.successCallback(data,lastRow)
                     gridApi.value?.autoSizeAllColumns()
                 } catch (error) {
+                    loadings.value[0]=false
                     console.log(error)
                     params.failCallback()
                 }
             }
         }
         gridApi.value?.setGridOption('datasource',dataSource)
+        loadings.value[0]=false
     }
     // 👉 Fetching data -- Detail
     const fetchData2=async()=>{
+        loadings.value[2]=true
         currentTab.value='Detail'
         const dataSource:IDatasource={
             rowCount:undefined,
@@ -382,12 +386,14 @@
                     params.successCallback(data,lastRow)
                     gridApi2.value?.autoSizeAllColumns()
                 } catch (error) {
+                    loadings.value[2]=false
                     console.log(error)
                     params.failCallback()
                 }
             }
         }
         gridApi2.value?.setGridOption('datasource',dataSource)
+        loadings.value[2]=false
     }
 
     // 👉 Export Excel -- Summary
@@ -471,7 +477,7 @@
                             :columnDefs="columnDefs"
                             :defaultColDef="defaultColDef"
                             :getRowStyle="getRowStyle"
-                            :headerHeight="35"
+                            :headerHeight="38"
                             :row-height="35"
                             :pinnedBottomRowData="rowFooter"
                             :suppressColumnVirtualisation="true"
@@ -535,7 +541,7 @@
                             :columnDefs="columnDefs2"
                             :defaultColDef="defaultColDef"
                             :getRowStyle="getRowStyle"
-                            :headerHeight="35"
+                            :headerHeight="38"
                             :row-height="35"
                             :pinnedBottomRowData="rowFooter2"
                             :suppressColumnVirtualisation="true"

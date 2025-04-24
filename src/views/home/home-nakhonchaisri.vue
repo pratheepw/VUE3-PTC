@@ -437,10 +437,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Daily Delivery',
-            to:'',
+            to:'/fabric-wip/daily-delivery',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {

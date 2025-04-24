@@ -43,7 +43,7 @@
         {
             field:'weight',type:'rightAligned',
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
@@ -52,7 +52,7 @@
                 if(params.node.rowPinned=='bottom')
                     return ''
                 else
-                    return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                    return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {field:'section',hide:true},
@@ -62,77 +62,77 @@
             headerName:'รูกลม (Round Hole)',field:'knitCircle',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'รูรี (Oval Hole)',field:'knitOval',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'เข็มหัก (Broken Needle)',field:'knitBrokeNeedle',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'รอยเกี่ยวผ้า (Scratch)',field:'knitHook',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'รอยฟันหนู (Fabric Stain)',field:'knitBad',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'ฝุ่น (Dust)',field:'dust',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'รอยสปันขาด (Dirty Machine)',field:'knitDirtyMachine',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'เปื้อน (Dirty)',field:'knitDirty',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'เป็นเม็ดกับ เศษด้ายปน',field:'knitHorizontal',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'ต่อปลาย (Ending Joint)',field:'knitConnectEnd',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             headerName:'ตามด (Knit Hole)',field:'knitHole',type:'rightAligned',
             headerClass:'rotate-text',wrapHeaderText:true,autoHeaderHeight:true,
             cellRenderer:(params:any)=>{
-                return params.value===0?'':new Intl.NumberFormat().format(params.value)
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {

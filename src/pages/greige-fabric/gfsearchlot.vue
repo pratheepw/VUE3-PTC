@@ -273,16 +273,16 @@
                     headerHeight= 220
                     break
                 case 'md': 
-                    headerHeight= 170
+                    headerHeight= 150
                     break
                 case 'lg': 
-                    headerHeight= 170
+                    headerHeight= 150
                     break
                 case 'xl': 
-                    headerHeight= 235
+                    headerHeight= 150
                     break
                 case 'xxl': 
-                    headerHeight= 235
+                    headerHeight= 150
                     break
             }
             return height.value-headerHeight
@@ -295,8 +295,8 @@
 <template>
     <VCard>
         <VCardText class="px-1 py-1">
-            <VRow class="my-1">
-                <VCol cols="6" md="3" lg="2" class="pb-1">
+            <VRow no-gutters>
+                <VCol cols="6" md="3" lg="2" class="pa-1">
                     <VSelect
                         v-model="ddlType"
                         :items="['Lot No','Fabric Order No']"
@@ -304,14 +304,14 @@
                         density="compact"
                     />
                 </VCol>
-                <VCol cols="6" md="3" lg="2" class="pb-1">
+                <VCol cols="6" md="3" lg="2" class="pa-1">
                     <AppTextField
                         id="txtSearch"
                         v-model="txtSearch"
                         density="compact"
                     />
                 </VCol>
-                <VCol cols="8" md="4" lg="3" class="pt-1 pt-md-3 pb-md-0">
+                <VCol cols="8" md="4" lg="3" class="pa-1">
                     <VBtn
                         size="small"
                         color="primary"
@@ -326,6 +326,7 @@
                         size="small"
                         color="success"
                         class="ms-1"
+                        variant="tonal"
                         :loading="loadings[1]"
                         :disabled="loadings[1]"
                         @click="exportExcel()"
@@ -336,7 +337,7 @@
                 </VCol>
                 <VCol 
                     cols="4" md="2" lg="2"
-                    class="d-flex justify-end ms-auto pt-1 pt-md-3 pb-md-0"
+                    class="d-flex justify-end ms-auto pa-1"
                 >
                     <VChip 
                         v-if="rowFooter"
@@ -358,7 +359,7 @@
                 :class="myStore.agGridthemeClass"
                 :columnDefs="columnDefs"
                 :defaultColDef="defaultColDef"
-                :headerHeight="35"
+                :headerHeight="38"
                 :pinnedBottomRowData="pinnedBottomRowData"
                 :row-height="35"
                 :rowData="rowData"
