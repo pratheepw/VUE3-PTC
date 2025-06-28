@@ -67,6 +67,7 @@ declare module 'vue-router/auto-routes' {
     'dashboards-analytics': RouteRecordInfo<'dashboards-analytics', '/dashboards/analytics', Record<never, never>, Record<never, never>>,
     'dashboards-crm': RouteRecordInfo<'dashboards-crm', '/dashboards/crm', Record<never, never>, Record<never, never>>,
     'dashboards-ecommerce': RouteRecordInfo<'dashboards-ecommerce', '/dashboards/ecommerce', Record<never, never>, Record<never, never>>,
+    'dyeing-shrinkage': RouteRecordInfo<'dyeing-shrinkage', '/dyeing/shrinkage', Record<never, never>, Record<never, never>>,
     'extensions-swiper': RouteRecordInfo<'extensions-swiper', '/extensions/swiper', Record<never, never>, Record<never, never>>,
     'extensions-tour': RouteRecordInfo<'extensions-tour', '/extensions/tour', Record<never, never>, Record<never, never>>,
     'fabric-fabric-dimension': RouteRecordInfo<'fabric-fabric-dimension', '/fabric/fabric-dimension', Record<never, never>, Record<never, never>>,
@@ -141,5 +142,7 @@ declare module 'vue-router/auto-routes' {
     'wizard-examples-checkout': RouteRecordInfo<'wizard-examples-checkout', '/wizard-examples/checkout', Record<never, never>, Record<never, never>>,
     'wizard-examples-create-deal': RouteRecordInfo<'wizard-examples-create-deal', '/wizard-examples/create-deal', Record<never, never>, Record<never, never>>,
     'wizard-examples-property-listing': RouteRecordInfo<'wizard-examples-property-listing', '/wizard-examples/property-listing', Record<never, never>, Record<never, never>>,
+    'yarn-stock-yarn-check': RouteRecordInfo<'yarn-stock-yarn-check', '/yarn-stock/yarn-check', Record<never, never>, Record<never, never>>,
+    'yarn-stock-yarn-cost': RouteRecordInfo<'yarn-stock-yarn-cost', '/yarn-stock/yarn-cost', Record<never, never>, Record<never, never>>,
   }
 }

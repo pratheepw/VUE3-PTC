@@ -394,10 +394,8 @@
                         :config="{mode:'range'}"
                     />
                 </VCol>
-                <VCol cols="12" sm="auto" class="pa-1 pt-sm-2 d-flex flex-column">
+                <VCol cols="12" sm="auto" class="pa-1 d-flex flex-column">
                     <VBtn
-                        size="small"
-                        class="ms-1"
                         :loading="loadings[0]"
                         :disabled="loadings[0]"
                         @click="fetchData()"

@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 
 export const useAuthStore=defineStore('auth',()=>{
     const refreshTokenTimeout=ref<any>(null)
+    const refreshTokenSuccess=ref<boolean>(false)
     
     const refreshToken=async()=>{
         try {
@@ -17,11 +18,13 @@ export const useAuthStore=defineStore('auth',()=>{
             const{accessToken,refreshToken}=res
             useCookie('accessToken').value=accessToken
             useCookie('refreshToken').value=refreshToken
+            refreshTokenSuccess.value=true
 
             startRefreshTokenTimer(accessToken)
 
         } catch (error) {
             console.log(error)
+
         }
     }
 
@@ -42,8 +45,5 @@ export const useAuthStore=defineStore('auth',()=>{
     } 
     
 
-
-
-
-    return {refreshToken,startRefreshTokenTimer,stopRefreshTokenTimer}
+    return {refreshToken,startRefreshTokenTimer,stopRefreshTokenTimer,refreshTokenSuccess}
 })

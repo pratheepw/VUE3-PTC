@@ -28,7 +28,14 @@ const startApp=async ()=>{
         //if(accessToken && refreshToken){
             const authStore=useAuthStore()
             await authStore.refreshToken()
-            console.log('refresh token')
+            if(authStore.refreshTokenSuccess){
+                console.log('refresh token success')
+            }else{
+                console.log('refresh token failed')
+                authStore.stopRefreshTokenTimer()
+                logout()
+            }
+            
         //}
         
     } catch (error) {
@@ -39,7 +46,37 @@ const startApp=async ()=>{
     app.mount('#app')
 }
 
+const logout = async () => {
+    const userData = useCookie<any>('userData')
+    const avatar= localStorage.getItem('avatar')
+    const router = useRouter()
+    //const ability = useAbility()
+
+    // Remove "accessToken" from cookie
+    useCookie('accessToken').value = null
+
+    // Remove "refreshToken" from cookie
+    useCookie('refreshToken').value=null
+
+    // Remove "userData" from cookie
+    userData.value = null
+    localStorage.removeItem('avatar')
+
+     
+    
+    // Redirect to login page
+    await router.replace('/login')
+
+    // ℹ️ We had to remove abilities in then block because if we don't nav menu items mutation is visible while redirecting user to login page
+    // Remove "userAbilities" from cookie
+    useCookie('userAbilityRules').value = null
+
+    // Reset ability to initial ability
+    //ability.update([])
+}
+
 startApp()
+
 
 
 /* // Create vue app

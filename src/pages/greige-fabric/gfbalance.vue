@@ -81,8 +81,9 @@
         },
         {
             headerName:'Code',field:'code',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
             cellRenderer:'gfbalanceCodeRenderer',
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
         },
         {
             headerName:'Qty',field:'qty',type:'rightAligned',
@@ -157,10 +158,12 @@
         {
             headerName:'Code',field:'code',
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
         },
         {
             field:'pieceNo',
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
         },
         {
             headerName:'Weight',field:'weight',type:'rightAligned',
@@ -204,6 +207,7 @@
         {
             headerName:'Employee',field:'empId',
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
         },
         {
             headerName:'1',field:'knitCircle',type:'rightAligned',headerTooltip:'รูกลม (Round Hole)',

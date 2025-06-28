@@ -188,10 +188,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Check In/Out/Return',
-            to:'',
+            to:'/yarn-stock/yarn-check',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {
@@ -204,10 +204,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Yarn Cost',
-            to:'',
+            to:'/yarn-stock/yarn-cost',
             props:{
                 prependIcon:'tabler-lock',
-                disabled:true
+                disabled:false
             },
         },
         {

@@ -33,6 +33,7 @@ declare module 'vue' {
     CardStatisticsVerticalSimple: typeof import('./src/@core/components/CardStatisticsVerticalSimple.vue')['default']
     CellComponentEditor: typeof import('./src/components/ag-grid/CellComponentEditor.vue')['default']
     ConfirmDialog: typeof import('./src/components/dialogs/ConfirmDialog.vue')['default']
+    copy: typeof import('./src/components/ag-grid/VIconWithTextRenderer copy.vue')['default']
     CreateAppDialog: typeof import('./src/components/dialogs/CreateAppDialog.vue')['default']
     CustomCheckboxes: typeof import('./src/@core/components/app-form-elements/CustomCheckboxes.vue')['default']
     CustomCheckboxesWithIcon: typeof import('./src/@core/components/app-form-elements/CustomCheckboxesWithIcon.vue')['default']
@@ -397,6 +398,7 @@ declare module 'vue' {
     UserUpgradePlanDialog: typeof import('./src/components/dialogs/UserUpgradePlanDialog.vue')['default']
     VChipArrayRenderer: typeof import('./src/components/ag-grid/VChipArrayRenderer.vue')['default']
     VChipRenderer: typeof import('./src/components/ag-grid/VChipRenderer.vue')['default']
+    VIconRenderer: typeof import('./src/components/ag-grid/VIconRenderer.vue')['default']
     VIconWithTextRenderer: typeof import('./src/components/ag-grid/VIconWithTextRenderer.vue')['default']
   }
 }
