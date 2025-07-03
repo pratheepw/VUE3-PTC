@@ -27,6 +27,7 @@
     "@tiptap/vue-3": "^2.5.8",
     "@vueuse/core": "10.11.0",
     "@vueuse/math": "10.11.0",
+    "ag-grid-enterprise": "^34.0.0",
     "ag-grid-vue3": "^32.3.0",
     "apexcharts": "3.51.0",
     "chart.js": "4.4.3",

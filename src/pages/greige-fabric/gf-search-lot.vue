@@ -9,7 +9,7 @@
     definePage({
         meta:{
             action:'read',
-            subject:'gfsearchlot'
+            subject:'gf-search-lot'
         }
     })
 
@@ -27,12 +27,17 @@
     const ddlType=ref('Lot No')
     const txtSearch=ref('')
     const rowData=ref([])
-    const rowFooter=ref(null)
-    const pinnedBottomRowData=ref<any[]>([])
     const loadings=ref<boolean[]>([])
+    watch([ddlType,txtSearch],async([newDdlType,newTxtSearch],[oldDdlType,oldTxtSearch])=>{
+        if (newDdlType !== oldDdlType || newTxtSearch !== oldTxtSearch) {
+            clearGrid()
+        }
+    })
 
     // 👉 agGrid
     const gridApi=shallowRef<GridApi|null>(null)
+    const rowFooter=ref<any>()
+
     const columnDefs=ref([
         {headerName:'Issue No.',field:'issue'},
         {
@@ -46,11 +51,10 @@
         {field:'code'},
         {headerName:'Piece No.', field:'pieceNo'},
         {
-            field:'weight',
-            cellDataType:'number',type:'rightAligned',
-            cellClassRules:{
-                'text-bold':(params:any)=>params.node.rowPinned
-            }
+            field:'weight',type:'rightAligned',
+            cellRenderer:(params:any)=>{
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+            },
         },
         {field:'color'},
         {headerName:'Order No.', field:'fabOrderNo'},
@@ -176,7 +180,6 @@
       suppressHeaderMenuButton:true,
       width:100,
     });
-    
     const autoSizeStrategy = ref<
       | SizeColumnsToFitGridStrategy
       | SizeColumnsToFitProvidedWidthStrategy
@@ -236,6 +239,7 @@
             console.log(error)
         }
     }
+
     // 👉 Export Excel
     const exportExcel=async()=>{
         try {
@@ -257,7 +261,20 @@
             loadings.value[1]=false
             console.log(error)
         }
-        
+    }
+
+    // 👉 Clear grid
+    const clearGrid=()=>{
+        const emptyDatasource:IDatasource={
+                getRows:async(params:IGetRowsParams)=>{
+                    params.successCallback([],0)
+                }
+            }
+            gridApi.value?.setGridOption('datasource',emptyDatasource)
+            rowFooter.value=[{
+                totalRows:0,
+                weight : 0,
+            }]
     }
 
     onMounted(()=>{
@@ -301,19 +318,16 @@
                         v-model="ddlType"
                         :items="['Lot No','Fabric Order No']"
                         label="Search by"
-                        density="compact"
                     />
                 </VCol>
                 <VCol cols="6" md="3" lg="2" class="pa-1">
                     <AppTextField
                         id="txtSearch"
                         v-model="txtSearch"
-                        density="compact"
                     />
                 </VCol>
                 <VCol cols="8" md="4" lg="3" class="pa-1">
                     <VBtn
-                        size="small"
                         color="primary"
                         :loading="loadings[0]"
                         :disabled="loadings[0]"
@@ -322,28 +336,43 @@
                         <VIcon start icon="tabler-search"/>    
                         Search
                     </VBtn>
+                </VCol>
+                <VCol cols="12" class="py-1">
+                    <AgGridVue
+                id="myGrid"
+                @gridReady="onGridReady"
+                :autoSizeStrategy="autoSizeStrategy"
+                :class="myStore.agGridthemeClass"
+                :columnDefs="columnDefs"
+                :defaultColDef="defaultColDef"
+                :headerHeight="38"
+                :pinnedBottomRowData="rowFooter"
+                :row-height="35"
+                :rowData="rowData"
+                :suppressColumnVirtualisation="true"
+            />
+                </VCol>
+                <VCol cols="auto" class="pa-1">
                     <VBtn
                         size="small"
                         color="success"
                         class="ms-1"
-                        variant="tonal"
                         :loading="loadings[1]"
                         :disabled="loadings[1]"
                         @click="exportExcel()"
                     >
-                        <VIcon start icon="tabler-file-spreadsheet"/>    
+                        <VIcon start icon="tabler-file-excel"/>    
                         Export Excel
                     </VBtn>
                 </VCol>
                 <VCol 
-                    cols="4" md="2" lg="2"
-                    class="d-flex justify-end ms-auto pa-1"
+                    cols="auto" class="pa-1 d-flex justify-end ms-auto "
                 >
                     <VChip 
-                        v-if="rowFooter"
+                        v-if=" rowFooter"
                         color="#E91E63"
                     >
-                        {{ new Intl.NumberFormat().format(rowFooter.totalRows)}} rows
+                        {{ new Intl.NumberFormat().format(rowFooter[0].totalRows)}} rows
                     </VChip>
                     <VChip
                         v-else
@@ -352,22 +381,7 @@
                     </VChip>
                 </VCol>
             </VRow>
-            <AgGridVue
-                id="myGrid"
-                @gridReady="onGridReady"
-                :autoSizeStrategy="autoSizeStrategy"
-                :class="myStore.agGridthemeClass"
-                :columnDefs="columnDefs"
-                :defaultColDef="defaultColDef"
-                :headerHeight="38"
-                :pinnedBottomRowData="pinnedBottomRowData"
-                :row-height="35"
-                :rowData="rowData"
-                :suppressColumnVirtualisation="true"
-            />
         </VCardText>
-         
-        
     </VCard>
 </template>
 

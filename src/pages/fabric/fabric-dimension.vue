@@ -55,14 +55,17 @@
         {
             headerName:'Rec No.',field:'recNo',minWidth:96,
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
         },
         { 
             headerName: "Fabric Code", field: "fabricCode",
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' }, 
+            suppressFloatingFilterButton:true, 
         },
         { 
             headerName: "Color", field: "color",
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
         },
         {
             headerName:'Dimension change after 24 hr holding',

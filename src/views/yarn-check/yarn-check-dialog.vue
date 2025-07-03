@@ -48,13 +48,13 @@
         { field:'serial'},
         {
             field:'weight',type:'rightAligned',
-            cellRenderer:(params:any)=>{
+            valueFormatter:(params:any)=>{
                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
         {
             field:'price',type:'rightAligned',
-            cellRenderer:(params:any)=>{
+            valueFormatter:(params:any)=>{
                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
             },
         },
@@ -70,9 +70,6 @@
             cellClass:'d-flex align-center justify-center',
         },
         {field:'location'},
-
-
-
     ])
     const defaultColDef = ref<ColDef>({
       sortable: false,

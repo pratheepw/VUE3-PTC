@@ -12,7 +12,7 @@
     definePage({
         meta:{
             action:'read',
-            subject:'gfbalance'
+            subject:'gf-balance'
         }
     })
 

@@ -62,9 +62,9 @@
     const dateRange=ref('')
     const status=ref('All')
     const loadings=ref<boolean[]>([])
-    watch(dateRange,async(newValue,oldValue)=>{
-        if (newValue !== oldValue) {
-            clearGRid()
+    watch([dateRange,status],async([newDateRange,newStatus],[oldDateRange,oldStatus])=>{
+        if (newDateRange !== oldDateRange || newStatus !== oldStatus) {
+            clearGrid()
         }
     })
     
@@ -146,19 +146,19 @@
         },
         {
             field:'carton',type:'rightAligned',
-             cellRenderer:(params:any)=>{
+             valueFormatter:(params:any)=>{
                  return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
              }
         },
         {
             field:'weight',type:'rightAligned',
-             cellRenderer:(params:any)=>{
+             valueFormatter:(params:any)=>{
                  return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
              }
         },
         {
             field:'weightLbs',type:'rightAligned',
-             cellRenderer:(params:any)=>{
+             valueFormatter:(params:any)=>{
                  return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
              }
         },
@@ -190,161 +190,16 @@
         {
             headerName:'Doc Date',field:'docDate',
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,10):null
+            valueFormatter:(params:any)=>{
+                const d=new Date(params.value)
+                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-UK', {
+                    dateStyle: 'short',
+                }).format(d)
             },
             filter:'agDateColumnFilter',
             floatingFilter:true,
             suppressFloatingFilterButton:true, 
         },
-
-        
-
-        
-        // {
-        //     field:'time',maxWidth:143,
-        //     cellDataType:'date',
-        //     cellRenderer:(params:any)=>{
-        //         return params.value?params.value.substr(0,16).replace('T',' '):null
-        //     }
-        // },
-        
-        // {
-        //     headerName:'Fabric',field:'fabricCode',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        //     cellRenderer:'DailyDeliveryCodeRenderer',
-        // },
-        // {
-        //     field:'color',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     headerName:'Lot No.',field:'lotNo',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     headerName:'Fabric Order No.',field:'fabOrderNo',maxWidth:118,
-        //     wrapHeaderText:true,autoHeaderHeight:true,
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     field:'customerPo',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     headerName:'Pcs.',field:'pcs',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     headerName:'Kgs.',field:'weight',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     field:'piece',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     field:'length',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     headerName:'RT',
-        //     children:[
-        //         {
-        //             headerName:'Pcs.',field:'rPcs',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Kgs.',field:'rWeight',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Piece',field:'rPiece',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Length',field:'rLength',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },        
-        //     ]
-        // },
-        // {
-        //     headerName:'Sample',
-        //     children:[
-        //         {
-        //             headerName:'Pcs.',field:'sPcs',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Kgs.',field:'sWeight',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Piece',field:'sPiece',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Length',field:'sLength',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },        
-        //     ]
-        // },
-        // {
-        //     headerName: "Section", field: "section", 
-        //     filter:'agTextColumnFilter',
-        //     filterParams:{
-        //         filterOptions: ["equals"],
-        //         maxNumConditions: 1
-        //     },
-        //     floatingFilter:true,
-        //     floatingFilterComponent:'DropDownFloatingFilter',
-        //     floatingFilterComponentParams:{
-        //          values: [
-        //             { 'text': 'All', 'value': '' },
-        //             {'text':'SAI4','value':'SAI4'},
-        //             {'text':'SALES1','value':'SALES1'},
-        //             {'text':'SALES2','value':'SALES2'},
-        //             {'text':'SALES3','value':'SALES3'},
-        //             {'text':'SALES4','value':'SALES4'},
-        //             {'text':'SALES5','value':'SALES5'},
-        //             {'text':'THAI PARFUN','value':'THAI PARFUN'}
-        //         ],
-            
-        //     },
-        //     suppressFloatingFilterButton:true,
-        // },
-        // {
-        //     field:'customer',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     field:'billNo',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
 
     ])
     const defaultColDef = ref<ColDef>({
@@ -463,7 +318,7 @@
     }
 
     // 👉 Clear grid
-    const clearGRid=()=>{
+    const clearGrid=()=>{
         const emptyDatasource:IDatasource={
                 getRows:async(params:IGetRowsParams)=>{
                     params.successCallback([],0)

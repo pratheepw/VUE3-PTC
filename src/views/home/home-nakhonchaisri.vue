@@ -284,7 +284,7 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Balance',
-            to:'/greige-fabric/gfbalance',
+            to:'/greige-fabric/gf-balance',
             props:{
                 prependIcon:'tabler-point',
                 disabled:false
@@ -300,7 +300,7 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Search Lot No.',
-            to:'/greige-fabric/gfsearchlot',
+            to:'/greige-fabric/gf-search-lot',
             props:{
                 prependIcon:'tabler-point',
                 disabled:false
@@ -315,11 +315,11 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
             },
         },
         {
-            title:'Search Grige Fabric by Fabric',
-            to:'',
+            title:'Search Greige Fabric by Fabric',
+            to:'/greige-fabric/gf-search-fabric',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {
@@ -375,10 +375,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Shrinkage',
-            to:'',
+            to:'/dyeing/shrinkage',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {

@@ -10,8 +10,6 @@
     import { useMyStore } from '@/stores/my'
     import { useDisplay } from 'vuetify'
 
-
-
     definePage({
         meta:{
             action:'read',
@@ -76,18 +74,11 @@
         {title:'December',value:12}        
     ]
     const loadings=ref<boolean[]>([])
-    watch(month,async(newValue,oldValue)=>{
-        if (newValue !== oldValue) {
+    watch([month,year],async([newMonth,newYear],[oldMonth,oldYear])=>{
+        if (newMonth !== oldMonth || newYear !== oldYear) {
             clearGRid()
         }
     })
-    watch(year,async(newValue,oldValue)=>{
-         if (newValue !== oldValue) {
-             clearGRid()
-         }
-     })
-
-
     
     // 👉 agGrid
     const gridApi=shallowRef<GridApi|null>(null)
@@ -155,7 +146,7 @@
                 {
                     headerName:'Kgs',field:'beginKgs',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellStyle:{'color':'#B388FF'}
                 },
@@ -169,7 +160,7 @@
                 {
                     headerName:'Amt',field:'beginAmount',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellStyle:{'color':'#B388FF'}
                 },
@@ -179,30 +170,30 @@
             headerName:'In',
             children:[
                 {
-                    headerName:'Ctns',field:'inCarton',
+                    headerName:'Ctns',field:'inCarton',type:'rightAligned',
                     cellRenderer:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
                 {
-                    headerName:'Kgs',field:'inKgs',
+                    headerName:'Kgs',field:'inKgs',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
                 {
-                    headerName:'Price',field:'inPrice',
+                    headerName:'Price',field:'inPrice',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:4}).format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
                 {
-                    headerName:'Amt',field:'inAmount',
+                    headerName:'Amt',field:'inAmount',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
@@ -212,16 +203,16 @@
             headerName:'Return',
             children:[
                 {
-                    headerName:'Ctns',field:'returnCarton',
+                    headerName:'Ctns',field:'returnCarton',type:'rightAligned',
                     cellRenderer:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-warning','text-end'],
                 },
                 {
-                    headerName:'Kgs',field:'returnKgs',
+                    headerName:'Kgs',field:'returnKgs',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-warning','text-end'],
                 },
@@ -231,23 +222,23 @@
             headerName:'Out',
             children:[
                 {
-                    headerName:'Ctns',field:'outCarton',
+                    headerName:'Ctns',field:'outCarton',type:'rightAligned',
                     cellRenderer:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-error','text-end'],
                 },
                 {
-                    headerName:'Kgs',field:'outKgs',
+                    headerName:'Kgs',field:'outKgs',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-error','text-end'],
                 },
                 {
-                    headerName:'Amt',field:'outAmount',
+                    headerName:'Amt',field:'outAmount',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-error','text-end'],
                 },
@@ -257,225 +248,55 @@
             headerName:'Balance',
             children:[
                 {
-                    headerName:'Ctns',field:'balanceCarton',pinned:'right',
+                    headerName:'Ctns',field:'balanceCarton',pinned:'right',type:'rightAligned',
                     cellRenderer:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-info','text-end'],
                 },
                 {
-                    headerName:'Kgs',field:'balanceKgs',pinned:'right',
+                    headerName:'Kgs',field:'balanceKgs',pinned:'right',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-info','text-end'],
                 },
                 {
-                    headerName:'Amt',field:'balanceAmount',pinned:'right',
+                    headerName:'Amt',field:'balanceAmount',pinned:'right',type:'rightAligned',
                     cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-info','text-end'],
                 },
             ],
         },
-        {field:'code'},
-        {field:'mixed'},
-        {field:'supplier'},
-        {field:'department'},
-        {field:'beginDepartment'},
+        {
+            field:'code',
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
+        },
+        {
+            field:'mixed',
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
+        },
+        {
+            field:'supplier',
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
+        },
+        {
+            field:'department',
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
+        },
+        {
+            field:'beginDepartment',
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            suppressFloatingFilterButton:true, 
+        },
         {field:'monthYear',hide:true},
-        // 
-        // {
-        //     headerName:'Status',field:'status',
-        //     cellRenderer:'VChipRenderer',
-        //     cellRendererParams:{
-        //         values:[
-        //             {color:'success',text:'In',value:'In'},
-        //             {color:'warning',text:'Return',value:'Return'},
-        //             {color:'error',text:'Out',value:'Out'}
-        //         ]
-        //     },
-        //     cellClass:'d-flex align-center',
-        // },
         
-        // {
-        //     field:'code',
-        // },
-        // {
-        //     headerName:'From',field:'recFrom',
-        // },
-        
-        
-        // {
-        //     headerName:'Doc No.',field:'docNo',
-        // },
-        // {
-        //     headerName:'PO NO.',field:'poNo',
-        // },
-        // {
-        //     headerName:'Delivery No.',field:'deliveryNo',
-        // },
-        // {
-        //     headerName:'Lot No.',field:'lotNo',
-        // },
-        
-        // {
-        //     headerName:'Doc Date',field:'docDate',
-        //     cellDataType:'date',
-        //      cellRenderer:(params:any)=>{
-        //          return params.value?params.value.substr(0,10):null
-        //      }
-        // },
-
-        
-
-        
-        // {
-        //     field:'time',maxWidth:143,
-        //     cellDataType:'date',
-        //     cellRenderer:(params:any)=>{
-        //         return params.value?params.value.substr(0,16).replace('T',' '):null
-        //     }
-        // },
-        
-        // {
-        //     headerName:'Fabric',field:'fabricCode',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        //     cellRenderer:'DailyDeliveryCodeRenderer',
-        // },
-        // {
-        //     field:'color',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     headerName:'Lot No.',field:'lotNo',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     headerName:'Fabric Order No.',field:'fabOrderNo',maxWidth:118,
-        //     wrapHeaderText:true,autoHeaderHeight:true,
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     field:'customerPo',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     headerName:'Pcs.',field:'pcs',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     headerName:'Kgs.',field:'weight',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     field:'piece',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     field:'length',type:'rightAligned',
-        //     cellRenderer:(params:any)=>{
-        //         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //     }
-        // },
-        // {
-        //     headerName:'RT',
-        //     children:[
-        //         {
-        //             headerName:'Pcs.',field:'rPcs',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Kgs.',field:'rWeight',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Piece',field:'rPiece',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Length',field:'rLength',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },        
-        //     ]
-        // },
-        // {
-        //     headerName:'Sample',
-        //     children:[
-        //         {
-        //             headerName:'Pcs.',field:'sPcs',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Kgs.',field:'sWeight',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Piece',field:'sPiece',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },
-        //         {
-        //             headerName:'Length',field:'sLength',type:'rightAligned',
-        //             cellRenderer:(params:any)=>{
-        //                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-        //             }
-        //         },        
-        //     ]
-        // },
-        // {
-        //     headerName: "Section", field: "section", 
-        //     filter:'agTextColumnFilter',
-        //     filterParams:{
-        //         filterOptions: ["equals"],
-        //         maxNumConditions: 1
-        //     },
-        //     floatingFilter:true,
-        //     floatingFilterComponent:'DropDownFloatingFilter',
-        //     floatingFilterComponentParams:{
-        //          values: [
-        //             { 'text': 'All', 'value': '' },
-        //             {'text':'SAI4','value':'SAI4'},
-        //             {'text':'SALES1','value':'SALES1'},
-        //             {'text':'SALES2','value':'SALES2'},
-        //             {'text':'SALES3','value':'SALES3'},
-        //             {'text':'SALES4','value':'SALES4'},
-        //             {'text':'SALES5','value':'SALES5'},
-        //             {'text':'THAI PARFUN','value':'THAI PARFUN'}
-        //         ],
-            
-        //     },
-        //     suppressFloatingFilterButton:true,
-        // },
-        // {
-        //     field:'customer',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-        // {
-        //     field:'billNo',
-        //     filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        // },
-
     ])
     const defaultColDef = ref<ColDef>({
       sortable: false,
