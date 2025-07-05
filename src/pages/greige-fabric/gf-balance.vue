@@ -151,9 +151,10 @@
         {
             field:'prodDate',maxWidth:143,
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,16).replace('T',' '):null
-            }
+            valueFormatter:(params:any)=>{
+                const d=new Date(params.value)
+                return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):''
+            },
         },
         {
             headerName:'Code',field:'code',
