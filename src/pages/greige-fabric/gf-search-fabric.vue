@@ -132,27 +132,21 @@
             headerName: 'InTimeDate', field: 'inTimeDate', 
             cellDataType: 'date',
             valueFormatter:(params:any)=>{
-                const d=new Date(params.value)
-                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-GB', {
-                    dateStyle: 'short',
-                    timeStyle: 'short',
-                    hourCycle: 'h23',
-                }).format(d)
-
-            }
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):null
+                }
+            },
         },
         { 
             headerName: 'OutTimeDate', field: 'outTimeDate',
             cellDataType: 'date',
             valueFormatter:(params:any)=>{
-                const d=new Date(params.value)
-                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-GB', {
-                    dateStyle: 'short',
-                    timeStyle: 'short',
-                    hourCycle: 'h23',
-                }).format(d)
-
-            }
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):null
+                }
+            },
         },
         {
             headerName: 'Yarn LotNo', field: 'yarnLotNo',

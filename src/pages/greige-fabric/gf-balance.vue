@@ -152,8 +152,10 @@
             field:'prodDate',maxWidth:143,
             cellDataType:'date',
             valueFormatter:(params:any)=>{
-                const d=new Date(params.value)
-                return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):''
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):null
+                }
             },
         },
         {

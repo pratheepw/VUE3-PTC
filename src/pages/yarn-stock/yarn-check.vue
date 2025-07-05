@@ -191,10 +191,10 @@
             headerName:'Doc Date',field:'docDate',
             cellDataType:'date',
             valueFormatter:(params:any)=>{
-                const d=new Date(params.value)
-                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-GB', {
-                    dateStyle: 'short',
-                }).format(d)
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):''
+                }
             },
             filter:'agDateColumnFilter',
             floatingFilter:true,

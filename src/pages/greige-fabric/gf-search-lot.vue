@@ -72,8 +72,10 @@
             headerName:'Date',field:'outDate',
             cellDataType:'date',
             valueFormatter:(params:any)=>{
-                const d=new Date(params.value)
-                return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):''
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):null
+                }
             },
         },
         {headerName:'Lot No.', field:'lotNo'},
