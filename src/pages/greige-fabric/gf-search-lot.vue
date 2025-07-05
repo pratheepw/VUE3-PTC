@@ -13,6 +13,34 @@
         }
     })
 
+    // 👉 Get window size
+    const {width,height}=useWindowSize()
+    const {name}=useDisplay()
+    const gridHeight=computed(()=>{
+        let headerHeight=0
+        switch(name.value){
+            case 'xs': 
+                headerHeight= 200
+                break
+            case 'sm': 
+                headerHeight= 200
+                break
+            case 'md': 
+                headerHeight= 200
+                break
+            case 'lg': 
+                headerHeight= 200
+                break
+            case 'xl': 
+                headerHeight= 200
+                break
+            case 'xxl': 
+                headerHeight= 200
+                break
+        }
+        return height.value-headerHeight
+    })
+
     // 👉 Set agGrid theme
     const myStore = useMyStore()
     const configStore=useConfigStore()
@@ -26,7 +54,6 @@
 
     const ddlType=ref('Lot No')
     const txtSearch=ref('')
-    const rowData=ref([])
     const loadings=ref<boolean[]>([])
     watch([ddlType,txtSearch],async([newDdlType,newTxtSearch],[oldDdlType,oldTxtSearch])=>{
         if (newDdlType !== oldDdlType || newTxtSearch !== oldTxtSearch) {
@@ -36,6 +63,7 @@
 
     // 👉 agGrid
     const gridApi=shallowRef<GridApi|null>(null)
+    const rowData=ref([])
     const rowFooter=ref<any>()
 
     const columnDefs=ref([
@@ -43,9 +71,10 @@
         {
             headerName:'Date',field:'outDate',
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value? params.value.substr(0,10):null
-            }
+            valueFormatter:(params:any)=>{
+                const d=new Date(params.value)
+                return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):''
+            },
         },
         {headerName:'Lot No.', field:'lotNo'},
         {field:'code'},
@@ -187,9 +216,16 @@
     >({
       type: "fitCellContents",
     })
+    const getRowStyle=(params:any) => {
+        if (params.node.rowPinned == "bottom") {
+            return { 'font-weight': 'bold' };
+        }
+    }
 
     const onGridReady=(params:GridReadyEvent)=>{
         gridApi.value=params.api
+        gridApi.value?.setGridOption('domLayout','normal')
+        document.getElementById('grid1')!.style.height=gridHeight.value+'px'
     }
 
     // 👉 Fetching data
@@ -198,9 +234,9 @@
             loadings.value[0]=true
             const {data,footer} = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getgfsearchlot?ddlType=${ddlType.value}&txtSearch=${txtSearch.value}&exportExcel=false`)
             rowData.value=data
-            rowFooter.value=footer
             if(footer){
-                pinnedBottomRowData.value=[{
+                rowFooter.value=[{
+                    totalRows:footer.totalRows,
                     weight:footer.weight,
                     k1:footer.k1,
                     k2:footer.k2,
@@ -214,22 +250,6 @@
                     k10:footer.k10,
                     k11:footer.k11,
                     iso:footer.iso
-                }]
-            }else{
-                pinnedBottomRowData.value=[{
-                    weight:0,
-                    k1:0,
-                    k2:0,
-                    k3:0,
-                    k4:0,
-                    k5:0,
-                    k6:0,
-                    k7:0,
-                    k8:0,
-                    k9:0,
-                    k10:0,
-                    k11:0,
-                    iso:0
                 }]
             }
             gridApi.value?.autoSizeAllColumns()
@@ -265,49 +285,10 @@
 
     // 👉 Clear grid
     const clearGrid=()=>{
-        const emptyDatasource:IDatasource={
-                getRows:async(params:IGetRowsParams)=>{
-                    params.successCallback([],0)
-                }
-            }
-            gridApi.value?.setGridOption('datasource',emptyDatasource)
-            rowFooter.value=[{
-                totalRows:0,
-                weight : 0,
-            }]
+        rowData.value=[]
+        rowFooter.value=undefined
     }
 
-    onMounted(()=>{
-        const {width,height}=useWindowSize()
-        const {name}=useDisplay()
-        const gridHeight=computed(()=>{
-            let headerHeight=0
-            switch(name.value){
-                case 'xs': 
-                    headerHeight= 220
-                    break
-                case 'sm': 
-                    headerHeight= 220
-                    break
-                case 'md': 
-                    headerHeight= 150
-                    break
-                case 'lg': 
-                    headerHeight= 150
-                    break
-                case 'xl': 
-                    headerHeight= 150
-                    break
-                case 'xxl': 
-                    headerHeight= 150
-                    break
-            }
-            return height.value-headerHeight
-        })
-        gridApi.value?.setGridOption('domLayout','normal')
-        document.getElementById('myGrid')!.style.height=gridHeight.value+'px'
-    })
-    
 </script>
 <template>
     <VCard>
@@ -339,7 +320,7 @@
                 </VCol>
                 <VCol cols="12" class="py-1">
                     <AgGridVue
-                id="myGrid"
+                id="grid1"
                 @gridReady="onGridReady"
                 :autoSizeStrategy="autoSizeStrategy"
                 :class="myStore.agGridthemeClass"
