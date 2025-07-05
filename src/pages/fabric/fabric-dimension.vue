@@ -48,9 +48,10 @@
         {
             headerName:'Date',field:'delDate',minWidth:105,
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,10):null
-            }
+            valueFormatter:(params:any)=>{
+                const d=new Date(params.value)
+                return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):''
+            },
         },
         {
             headerName:'Rec No.',field:'recNo',minWidth:96,

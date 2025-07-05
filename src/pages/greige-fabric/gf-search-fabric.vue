@@ -133,7 +133,7 @@
             cellDataType: 'date',
             valueFormatter:(params:any)=>{
                 const d=new Date(params.value)
-                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-UK', {
+                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-GB', {
                     dateStyle: 'short',
                     timeStyle: 'short',
                     hourCycle: 'h23',
@@ -146,7 +146,7 @@
             cellDataType: 'date',
             valueFormatter:(params:any)=>{
                 const d=new Date(params.value)
-                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-UK', {
+                return (isNaN(d)) ? '' : new Intl.DateTimeFormat('en-GB', {
                     dateStyle: 'short',
                     timeStyle: 'short',
                     hourCycle: 'h23',
