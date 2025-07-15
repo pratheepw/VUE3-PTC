@@ -367,6 +367,7 @@
                     <VSelect
                         v-model="status"
                         :items="['All','In','Out','Return']"
+                        label="Status"
                     />
                 </VCol>
                 <VCol cols="6" sm="12" md="auto" class="pa-1 d-flex flex-column flex-md-row">

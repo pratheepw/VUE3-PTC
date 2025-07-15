@@ -180,10 +180,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Balance',
-            to:'',
+            to:'/yarn-stock/yarn-balance',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false    
             },
         },
         {

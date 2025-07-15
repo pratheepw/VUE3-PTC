@@ -48,9 +48,13 @@
         {
             headerName:'In Date',field:'inDate',pinned:'left',
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,19).replace('T',' '):null
+            valueFormatter:(params:any)=>{
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):null
+                }
             },
+
             filter:'agDateColumnFilter',
             floatingFilter:true,
             suppressFloatingFilterButton:true, 

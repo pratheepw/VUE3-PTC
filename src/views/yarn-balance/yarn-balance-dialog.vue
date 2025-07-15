@@ -2,17 +2,24 @@
     import DialogCloseBtn from '@/@core/components/DialogCloseBtn.vue';
     import { AgGridVue } from 'ag-grid-vue3';
     import {ColDef,GridApi,GridReadyEvent,SizeColumnsToFitGridStrategy,SizeColumnsToFitProvidedWidthStrategy,SizeColumnsToContentStrategy} from 'ag-grid-community'
-    
+    import LoadingGif from '@/assets/images/spinner.gif'
+    import VIconRenderer from '@/components/ag-grid/VIconRenderer.vue';
+
     import { useConfigStore } from '@core/stores/config'
     import { useMyStore } from '@/stores/my'
 
     const isDialogVisible=defineModel<boolean>('isDialogVisible',{required:true})
     const props=defineProps({
-        sysDate:String,
-        fabricCode:String,
+        yarnId:Number,
+        code:String,
+        supplier:String,
         lotNo:String,
-        color:String,
-        fabOrderNo:String,
+        section:String,
+        sample:Boolean,
+        status:String,
+        dateSearch:String,
+        location:String,
+        customer:String
     })
 
     // 👉 Set agGrid theme
@@ -33,8 +40,51 @@
 
     const columnDefs=ref([
         {
-            headerName:'In time',field:'time',maxWidth:143,
-            cellDataType:'date',
+            headerName: '#',
+            maxWidth: 60,pinned: 'left',
+            valueGetter: 'node.id',
+            cellRenderer: (params:any) => {
+                if (params.node.rowPinned)
+                    return ''
+                else if (params.value !== undefined)
+                    return parseInt(params.value) + 1
+                else
+                    return '<img src='+LoadingGif+' width="35" height="35"/>'
+            },
+        },    
+        { field:'serial'},
+        {
+            headerName:'Carton No.',field:'cartonNo',type:'rightAligned',
+        },
+        {
+            field:'weight',type:'rightAligned',
+            valueFormatter:(params:any)=>{
+                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+            },
+        },
+        {
+            field:'sample',
+            cellRenderer:'VIconRenderer',
+            cellRendererParams:{
+                values:[
+                    {color:'secondary',icon:'tabler-check',value:true},
+                ]
+            },
+            cellClass:'d-flex align-center justify-center',
+        },
+        {headerName:'PO No.',field:'poNo'},
+        {
+            headerName:'PO Date',field:'poDate',
+            valueFormatter:(params:any)=>{
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):null
+                }
+            },
+
+        },
+        {
+            headerName:'Register',field:'register',
             valueFormatter:(params:any)=>{
                 if(params.value){
                     const d=new Date(params.value)
@@ -42,46 +92,15 @@
                 }
             },
 
-        },
-        {headerName:'Code',field:'fabricCode'},
-        {headerName:'Piece No.',field:'pieceNo'},
-        {headerName:'Dyeing Machine',field:'machineNo',wrapHeaderText:true,maxWidth:90},
-        {headerName:'Lot No.',field:'lotNo'},
-        {headerName:'Order No.',field:'orderNo'},
-        {headerName:'Color',field:'color'},
-        {
-            field:'weight',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-            },
-        },
-        {
-            field:'piece',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-            },
-        },
-        {
-            field:'length',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-            },
-        },
-        {field:'lengthUnit',wrapHeaderText:true,maxWidth:77},
-        {field:'section'},
-        {
-            field:'defect',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-            },
-        },
-        {
-            field:'price',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-            },
-        },
-        {field:'type'}
+        }
+
+
+
+
+
+
+
+
 
     ])
     const defaultColDef = ref<ColDef>({
@@ -105,7 +124,9 @@
 
     const onGridReady=async (params:GridReadyEvent)=>{
         gridApi.value=params.api
-        const {data,footer}=await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getdailydeliverymodal?dateSearch=${props.sysDate}&fabricCode=${props.fabricCode}&lotNo=${props.lotNo}&color=${props.color}&fabOrderNo=${props.fabOrderNo}&exportExcel=false`)
+        let urlApi=props.dateSearch?`${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceModal?yarnId=${props.yarnId}&supplier=${props.supplier}&lotNo=${props.lotNo}&section=${props.section}&sample=${props.sample}&location=${props.location}&customer=${props.customer}&status=${props.status}&dateSearch=${props.dateSearch}&exportExcel=false`:
+            `${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceCurrentModal?yarnId=${props.yarnId}&supplier=${props.supplier}&lotNo=${props.lotNo}&section=${props.section}&sample=${props.sample}&location=${props.location}&customer=${props.customer}&exportExcel=false`
+        const {data,footer}=await $api<any>(urlApi)
         rowData.value=data
         rowFooter.value=[{
             totalRows:footer.totalRows,
@@ -117,11 +138,13 @@
     const exportExcel=async()=>{
         try {
             loadings.value[0]=true
-            const res = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getdailydeliverymodal?dateSearch=${props.sysDate}&fabricCode=${props.fabricCode}&lotNo=${props.lotNo}&color=${props.color}&fabOrderNo=${props.fabOrderNo}&exportExcel=true`)
+            let urlApi=props.dateSearch?`${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceModal?yarnId=${props.yarnId}&supplier=${props.supplier}&lotNo=${props.lotNo}&section=${props.section}&sample=${props.sample}&location=${props.location}&customer=${props.customer}&status=${props.status}&dateSearch=${props.dateSearch}&exportExcel=true`:
+            `${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceCurrentModal?yarnId=${props.yarnId}&supplier=${props.supplier}&lotNo=${props.lotNo}&section=${props.section}&sample=${props.sample}&location=${props.location}&customer=${props.customer}&exportExcel=true`
+            const res = await $api<any>(urlApi)
             const url=window.URL.createObjectURL(res)
             const link=document.createElement('a')
             link.href=url
-            link.setAttribute('download','dailydeliverymodal.xlsx')
+            link.setAttribute('download','YarnBalanceDetail.xlsx')
             document.body.appendChild(link)
             link.click()
             link.remove()
@@ -136,6 +159,9 @@
         }
     }
 
+    defineExpose({
+        VIconRenderer,
+    })
 </script>
 <template>
     <v-dialog
@@ -147,7 +173,7 @@
             <v-card-title primary-title>
                 <VRow>
                     <VCol cols="12">
-                        Detail of Daily Delivery Report
+                        {{props.code}}
                     </VCol>
                 </VRow>
             </v-card-title>

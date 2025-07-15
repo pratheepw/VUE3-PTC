@@ -129,7 +129,7 @@
         },
         {
             field:'cost',type:'rightAligned',
-             cellRenderer:(params:any)=>{
+             valueFormatter:(params:any)=>{
                  return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
              }
         },
@@ -138,28 +138,28 @@
             children:[
                 {
                     headerName:'Ctns',field:'beginCarton',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellStyle:{'color':'#B388FF'}
                 },
                 {
                     headerName:'Kgs',field:'beginKgs',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellStyle:{'color':'#B388FF'}
                 },
                 {
                     headerName:'Price',field:'beginPrice',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellStyle:{'color':'#B388FF'}
                 },
                 {
                     headerName:'Amt',field:'beginAmount',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellStyle:{'color':'#B388FF'}
@@ -171,28 +171,28 @@
             children:[
                 {
                     headerName:'Ctns',field:'inCarton',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
                 {
                     headerName:'Kgs',field:'inKgs',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
                 {
                     headerName:'Price',field:'inPrice',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:4}).format(params.value)
                     },
                     cellClass:['text-success','text-end'],
                 },
                 {
                     headerName:'Amt',field:'inAmount',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-success','text-end'],
@@ -204,14 +204,14 @@
             children:[
                 {
                     headerName:'Ctns',field:'returnCarton',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-warning','text-end'],
                 },
                 {
                     headerName:'Kgs',field:'returnKgs',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-warning','text-end'],
@@ -223,21 +223,21 @@
             children:[
                 {
                     headerName:'Ctns',field:'outCarton',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-error','text-end'],
                 },
                 {
                     headerName:'Kgs',field:'outKgs',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-error','text-end'],
                 },
                 {
                     headerName:'Amt',field:'outAmount',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-error','text-end'],
@@ -249,21 +249,21 @@
             children:[
                 {
                     headerName:'Ctns',field:'balanceCarton',pinned:'right',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
                     },
                     cellClass:['text-info','text-end'],
                 },
                 {
                     headerName:'Kgs',field:'balanceKgs',pinned:'right',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-info','text-end'],
                 },
                 {
                     headerName:'Amt',field:'balanceAmount',pinned:'right',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
+                    valueFormatter:(params:any)=>{
                         return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
                     },
                     cellClass:['text-info','text-end'],

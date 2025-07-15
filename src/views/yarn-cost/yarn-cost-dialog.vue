@@ -57,9 +57,12 @@
         {
             headerName:'Date',field:'documentDate',
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,10):null
-            }
+            valueFormatter:(params:any)=>{
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):null
+                }
+            },
         },
         {headerName:'Supplier',field:'supplier'},
         {headerName:'PO',field:'poNo'},
@@ -110,9 +113,12 @@
         {
             headerName:'Return Date',field:'documentDate',
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,10):null
-            }
+            valueFormatter:(params:any)=>{
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):null
+                }
+            },
         },
         {headerName:'Lot No.',field:'lotNo'},
         {headerName:'Return No.',field:'documentNo'},
@@ -149,9 +155,12 @@
         {
             headerName:'Issue Date',field:'documentDate',
             cellDataType:'date',
-            cellRenderer:(params:any)=>{
-                return params.value?params.value.substr(0,10):null
-            }
+            valueFormatter:(params:any)=>{
+                if(params.value){
+                    const d=new Date(params.value)
+                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short' }).format(d):null
+                }
+            },
         },
         {headerName:'Lot No.',field:'lotNo'},
         {headerName:'Issue No.',field:'documentNo'},

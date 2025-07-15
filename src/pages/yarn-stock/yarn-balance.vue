@@ -1,19 +1,19 @@
 <script setup lang="ts">
     import { AgGridVue } from 'ag-grid-vue3'
     import {ColDef,GridApi,GridReadyEvent,IDatasource,IGetRowsParams,RowModelType,SizeColumnsToFitGridStrategy,SizeColumnsToFitProvidedWidthStrategy,SizeColumnsToContentStrategy} from 'ag-grid-community'
-    import DropDownFloatingFilter from '@/components/ag-grid/DropDownFloatingFilter.vue'
-    import DailyDeliveryCodeRenderer from '@/views/daily-delivery/daily-delivery-code-renderer.vue'
     import LoadingGif from '@/assets/images/spinner.gif'
+    import VIconRenderer from '@/components/ag-grid/VIconRenderer.vue'
+    import DropDownFloatingFilter from '@/components/ag-grid/DropDownFloatingFilter.vue'
+    import yarnBalanceDetailRenderer from '@/views/yarn-balance/yarn-balance-detail-renderer.vue'
 
     import { useConfigStore } from '@core/stores/config'
     import { useMyStore } from '@/stores/my'
     import { useDisplay } from 'vuetify'
 
-
     definePage({
         meta:{
             action:'read',
-            subject:'daily-delivery'
+            subject:'yarn-balance'
         }
     })
 
@@ -55,33 +55,24 @@
     })
 
     // 👉 Set current page title
-    myStore.currentPageTitle='Finish Fabric WIP / Daily Delivery'
+    myStore.currentPageTitle='Yarn Stock / Yarn Balance'
 
     const dateRange=ref('')
+    const searchType=ref('Date')
+    const isDisabled=ref(false)
     const loadings=ref<boolean[]>([])
-    watch(dateRange,async(newValue,oldValue)=>{
-        if (newValue !== oldValue) {
-            const emptyDatasource:IDatasource={
-                getRows:async(params:IGetRowsParams)=>{
-                    params.successCallback([],0)
-                }
-            }
-            gridApi.value?.setGridOption('datasource',emptyDatasource)
-            rowFooter.value=[{
-                totalRows:0,
-                pcs : 0,
-                weight : 0,
-                piece : 0,
-                length : 0,
-                rPcs : 0,
-                rWeight : 0,
-                rPiece : 0,
-                rLength : 0,
-                sPcs : 0,
-                sWeight : 0,
-                sPiece : 0,
-                sLength : 0
-            }]
+    watch([searchType],async([newSearchType],[oldSearchType])=>{
+        if(newSearchType !== oldSearchType){
+            clearGrid()
+            if(newSearchType=='Date')
+                isDisabled.value=false
+            else
+                isDisabled.value=true
+        }
+    })
+    watch([dateRange],async([newDateRange],[oldDateRange])=>{
+        if (newDateRange !== oldDateRange) {
+            clearGrid()
         }
     })
     
@@ -104,122 +95,89 @@
             },
         },
         {
-            field:'time',maxWidth:143,
-            cellDataType:'date',
-            valueFormatter:(params:any)=>{
-                if(params.value){
-                    const d=new Date(params.value)
-                    return (d instanceof Date && !isNaN(d.getTime())) ? new Intl.DateTimeFormat('en-GB', {dateStyle: 'short',timeStyle:'short' }).format(d):null
-                }
-            },
-
+            headerName:'',
+            cellRenderer:'yarnBalanceDetailRenderer',
+            cellClass:'d-flex align-center justify-center',
         },
         {
-            headerName:'ID',field:'fabricId',type:'rightAligned',maxWidth:70,
+            headerName:'ID',field:'yarnId',type:'rightAligned',maxWidth:87,
+            filter: true, floatingFilter: true, filterParams: { defaultOption: 'equals' },
+            suppressFloatingFilterButton:true,
         },
         {
-            headerName:'Fabric',field:'fabricCode',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-            cellRenderer:'DailyDeliveryCodeRenderer',
+            headerName:'Code',field:'code',
+            filter:'agTextColumnFilter',filterParams: { defaultOption: 'startsWith' },
+            floatingFilter:true,
+            suppressFloatingFilterButton:true,    
         },
         {
-            field:'color',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            headerName:'Supplier',field:'supplier',
+            filter:'agTextColumnFilter',filterParams: { defaultOption: 'startsWith' },
+            floatingFilter:true,
+            suppressFloatingFilterButton:true,    
+        },
+        {
+            headerName:'Type',field:'type',
+            filter:'agTextColumnFilter',filterParams: { defaultOption: 'startsWith' },
+            floatingFilter:true,
+            suppressFloatingFilterButton:true,    
         },
         {
             headerName:'Lot No.',field:'lotNo',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            filter:'agTextColumnFilter',filterParams: { defaultOption: 'startsWith' },
+            floatingFilter:true,
+            suppressFloatingFilterButton:true,    
         },
         {
-            headerName:'Fabric Order No.',field:'fabOrderNo',maxWidth:118,
-            wrapHeaderText:true,autoHeaderHeight:true,
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        },
-        {
-            field:'customerPo',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-        },
-        {
-            headerName:'Pcs.',field:'pcs',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+            field:'carton',type:'rightAligned',
+             valueFormatter:(params:any)=>{
+                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+             },
+             cellStyle:(params:any)=>{
+                if(params.data){
+                    if(params.data.status==='Begin'){
+                        return {'color':'#B388FF'}
+                    }else if(params.data.status==='Receive'){
+                        return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
+                    }else if(params.data.status==='Return'){
+                        return {'color':'rgb(var(--v-theme-warning))','background-color':'rgba(var(--v-theme-warning),0.1)'}
+                    }
+                }
             }
         },
         {
-            headerName:'Kgs.',field:'weight',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+            field:'weight',type:'rightAligned',
+             valueFormatter:(params:any)=>{
+                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+             },
+             cellStyle:(params:any)=>{
+                if(params.data){
+                    if(params.data.status==='Begin'){
+                        return {'color':'#B388FF'}
+                    }else if(params.data.status==='Receive'){
+                        return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
+                    }else if(params.data.status==='Return'){
+                        return {'color':'rgb(var(--v-theme-warning))','background-color':'rgba(var(--v-theme-warning),0.1)'}
+                    }
+                }
             }
         },
         {
-            field:'piece',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+            field:'cost',type:'rightAligned',
+             valueFormatter:(params:any)=>{
+                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+             },
+             cellStyle:(params:any)=>{
+                if(params.data){
+                    if(params.data.status==='Begin'){
+                        return {'color':'#B388FF'}
+                    }else if(params.data.status==='Receive'){
+                        return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
+                    }else if(params.data.status==='Return'){
+                        return {'color':'rgb(var(--v-theme-warning))','background-color':'rgba(var(--v-theme-warning),0.1)'}
+                    }
+                }
             }
-        },
-        {
-            field:'length',type:'rightAligned',
-            cellRenderer:(params:any)=>{
-                return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-            }
-        },
-        {
-            headerName:'RT',
-            children:[
-                {
-                    headerName:'Pcs.',field:'rPcs',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },
-                {
-                    headerName:'Kgs.',field:'rWeight',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },
-                {
-                    headerName:'Piece',field:'rPiece',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },
-                {
-                    headerName:'Length',field:'rLength',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },        
-            ]
-        },
-        {
-            headerName:'Sample',
-            children:[
-                {
-                    headerName:'Pcs.',field:'sPcs',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },
-                {
-                    headerName:'Kgs.',field:'sWeight',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },
-                {
-                    headerName:'Piece',field:'sPiece',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },
-                {
-                    headerName:'Length',field:'sLength',type:'rightAligned',
-                    cellRenderer:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    }
-                },        
-            ]
         },
         {
             headerName: "Section", field: "section", 
@@ -233,26 +191,61 @@
             floatingFilterComponentParams:{
                  values: [
                     { 'text': 'All', 'value': '' },
-                    {'text':'SAI4','value':'SAI4'},
-                    {'text':'SALES1','value':'SALES1'},
-                    {'text':'SALES2','value':'SALES2'},
-                    {'text':'SALES3','value':'SALES3'},
-                    {'text':'SALES4','value':'SALES4'},
+                    {'text':'FABRIC','value':'FABRIC'},
+                    { 'text': 'Inter', 'value': 'Inter' },
+                    { 'text': 'Parfun', 'value': 'Parfun' },
+                    { 'text': 'Riki', 'value': 'Riki' },
+                    {'text':'RIKI GARMENT','value':'RIKI GARMENT'},
+                    {'text':'SALES 1','value':'SALES 1'},
+                    { 'text': 'SALES1', 'value': 'SALES1' },
+                    {'text':'SALES 2','value':'SALES 2'},
+                    {'text':'SALES 3','value':'SALES 3'},
+                    { 'text': 'SALES3', 'value': 'SALES3' },
+                    {'text':'SALES 4 (PARFUN)','value':'SALES 4 (PARFUN)'},
+                    {'text':'SALES 5','value':'SALES 5'},
                     {'text':'SALES5','value':'SALES5'},
                     {'text':'THAI PARFUN','value':'THAI PARFUN'}
                 ],
-            
             },
             suppressFloatingFilterButton:true,
         },
         {
-            field:'customer',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            field:'sample',
+            cellRenderer:'VIconRenderer',
+            cellRendererParams:{
+                values:[
+                    {color:'secondary',icon:'tabler-check',value:true},
+                ]
+            },
+            cellClass:'d-flex align-center justify-center',
+            filter:'agTextColumnFilter',
+            filterParams:{
+                filterOptions: ["equals"],
+                maxNumConditions: 1
+            },
+            floatingFilter:true,
+            floatingFilterComponent:'DropDownFloatingFilter',
+            floatingFilterComponentParams:{
+                values: [
+                { 'text': 'All', 'value': '' }, 
+                { 'text': 'Sample', 'value': true }, 
+                { 'text': 'Order', 'value': false }]
+            },
+            suppressFloatingFilterButton:true,   
         },
         {
-            field:'billNo',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
+            headerName:'Location',field:'location',
+            filter:'agTextColumnFilter',filterParams: { defaultOption: 'startsWith' },
+            floatingFilter:true,
+            suppressFloatingFilterButton:true,    
         },
+        {
+            headerName:'Customer',field:'customer',
+            filter:'agTextColumnFilter',filterParams: { defaultOption: 'startsWith' },
+            floatingFilter:true,
+            suppressFloatingFilterButton:true,    
+        },
+        {field:'status',hide:true}
 
     ])
     const defaultColDef = ref<ColDef>({
@@ -295,22 +288,18 @@
                 try {
                     loadings.value[0]=true
                     const request={startRow:params.startRow,endRow:params.endRow,filterModel:params.filterModel,sortModel:params.sortModel}
-                    const {data,footer} = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getdailydelivery?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=false`)
+                    let url=''
+                    if(searchType.value=='Date'){
+                        url=`${import.meta.env.BASE_URL}api/yarn/GetYarnBalancePartial?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=false`
+                    }else{
+                        url=`${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceCurrentPartial?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=false`
+                    }
+                    const {data,footer} = await $api<any>(url)
                     if(footer){
                         rowFooter.value=[{
                             totalRows:footer.totalRows,
-                            pcs : footer.pcs,
+                            carton : footer.carton,
                             weight : footer.weight,
-                            piece : footer.piece,
-                            length : footer.length,
-                            rPcs : footer.rPcs,
-                            rWeight : footer.rWeight,
-                            rPiece : footer.rPiece,
-                            rLength : footer.rLength,
-                            sPcs : footer.sPcs,
-                            sWeight : footer.sWeight,
-                            sPiece : footer.sPiece,
-                            sLength : footer.sLength,
                         }]
                     }
                     
@@ -334,11 +323,17 @@
         try {
             loadings.value[1]=true
             const request={startRow:0,endRow:0,filterModel:gridApi.value?.getFilterModel(),sortModel:null}
-            const res = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getdailydelivery?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=true`)
+            let urlApi=''
+            if(searchType.value=='Date'){
+                urlApi=`${import.meta.env.BASE_URL}api/yarn/GetYarnBalancePartial?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=true`
+            }else{
+                urlApi=`${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceCurrentPartial?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=true`
+            }
+            const res = await $api<any>(urlApi)
             const url=window.URL.createObjectURL(res)
             const link=document.createElement('a')
             link.href=url
-            link.setAttribute('download','dailydelivery.xlsx')
+            link.setAttribute('download','YarnBalance.xlsx')
             document.body.appendChild(link)
             link.click()
             link.remove()
@@ -354,16 +349,19 @@
         
     }
 
-    // 👉 Export Excel 2
+    // 👉 Export Excel with PO No.
     const exportExcel2=async()=>{
         try {
             loadings.value[2]=true
+            
             const request={startRow:0,endRow:0,filterModel:gridApi.value?.getFilterModel(),sortModel:null}
-            const res = await $api<any>(`${import.meta.env.BASE_URL}api/fabric/getdailydeliveryexcel2?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}&exportExcel=true`)
+            let urlApi=searchType.value=="Date"?`${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceWithPO?dateSearch=${dateRange.value}&request=${JSON.stringify(request)}`:
+                `${import.meta.env.BASE_URL}api/yarn/GetYarnBalanceCurrentWithPO?request=${JSON.stringify(request)}`
+            const res = await $api<any>(urlApi)
             const url=window.URL.createObjectURL(res)
             const link=document.createElement('a')
             link.href=url
-            link.setAttribute('download','dailydeliveryexcel2.xlsx')
+            link.setAttribute('download','YarnBalanceWithPONo.xlsx')
             document.body.appendChild(link)
             link.click()
             link.remove()
@@ -379,27 +377,49 @@
         
     }
 
+    // 👉 Clear grid
+    const clearGrid=()=>{
+        const emptyDatasource:IDatasource={
+                getRows:async(params:IGetRowsParams)=>{
+                    params.successCallback([],0)
+                }
+            }
+            gridApi.value?.setGridOption('datasource',emptyDatasource)
+            rowFooter.value=[{
+                totalRows:0,
+                carton : 0,
+                weight : 0,
+            }]
+    }
+
     defineExpose({
-        DropDownFloatingFilter,
-        DailyDeliveryCodeRenderer
+        VIconRenderer,
+        yarnBalanceDetailRenderer,
+        DropDownFloatingFilter
     })
 </script>
 <template>
     <VCard>
         <VCardText class="px-1 py-1">
             <VRow no-gutters>
-                <VCol cols="2" sm="auto" class="pa-3">
-                    <label class="v-label text-body-2 text-high-emphasis">Date</label>
+                <VCol cols="6" sm="4" md="2" xl="1" class="pa-1">
+                    <VSelect
+                        v-model="searchType"
+                        :items="['Date','Current Inventory']"
+                        label="Type"
+                    />
                 </VCol>
                 <VCol cols="10" sm="6" md="4" lg="3" xl="2"  class="pa-1">
                     <AppDateTimePicker
+                        :disabled="isDisabled"
                         v-model="dateRange"
                         placeholder="Select date range"
                         :config="{mode:'range'}"
                     />
                 </VCol>
-                <VCol cols="12" sm="auto" class="pa-1 d-flex flex-column">
+                <VCol cols="6" sm="12" md="auto" class="pa-1 d-flex flex-column flex-md-row">
                     <VBtn
+                        class="ms-1"
                         :loading="loadings[0]"
                         :disabled="loadings[0]"
                         @click="fetchData()"
@@ -452,7 +472,7 @@
                         @click="exportExcel2()"
                     >
                         <VIcon start icon="tabler-file-excel"/>    
-                        Excel 2
+                        with PO No.
                     </VBtn>
                 </VCol>
                 <VCol 

@@ -143,6 +143,7 @@ declare module 'vue-router/auto-routes' {
     'wizard-examples-checkout': RouteRecordInfo<'wizard-examples-checkout', '/wizard-examples/checkout', Record<never, never>, Record<never, never>>,
     'wizard-examples-create-deal': RouteRecordInfo<'wizard-examples-create-deal', '/wizard-examples/create-deal', Record<never, never>, Record<never, never>>,
     'wizard-examples-property-listing': RouteRecordInfo<'wizard-examples-property-listing', '/wizard-examples/property-listing', Record<never, never>, Record<never, never>>,
+    'yarn-stock-yarn-balance': RouteRecordInfo<'yarn-stock-yarn-balance', '/yarn-stock/yarn-balance', Record<never, never>, Record<never, never>>,
     'yarn-stock-yarn-check': RouteRecordInfo<'yarn-stock-yarn-check', '/yarn-stock/yarn-check', Record<never, never>, Record<never, never>>,
     'yarn-stock-yarn-cost': RouteRecordInfo<'yarn-stock-yarn-cost', '/yarn-stock/yarn-cost', Record<never, never>, Record<never, never>>,
   }
