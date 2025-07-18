@@ -2,18 +2,17 @@
     import { AgGridVue } from 'ag-grid-vue3'
     import {ColDef,GridApi,GridReadyEvent,IDatasource,IGetRowsParams,RowModelType,SizeColumnsToFitGridStrategy,SizeColumnsToFitProvidedWidthStrategy,SizeColumnsToContentStrategy} from 'ag-grid-community'
     import LoadingGif from '@/assets/images/spinner.gif'
-    import YarnCostYarnidRenderer from '@/views/yarn-cost/yarn-cost-yarnid-renderer.vue'
-    import DropDownFloatingFilter from '@/components/ag-grid/DropDownFloatingFilter.vue'
-    import VIconRenderer from '@/components/ag-grid/VIconRenderer.vue'
+    import YarnMonthlyCartonRenderer from '@/views/yarn-monthly/yarn-monthly-carton-renderer.vue'
 
     import { useConfigStore } from '@core/stores/config'
     import { useMyStore } from '@/stores/my'
     import { useDisplay } from 'vuetify'
 
+
     definePage({
         meta:{
             action:'read',
-            subject:'yarn-cost'
+            subject:'yarn-monthly'
         }
     })
 
@@ -55,27 +54,15 @@
     })
 
     // 👉 Set current page title
-    myStore.currentPageTitle='Yarn Stock / Yarn Cost'
+    myStore.currentPageTitle='Yarn Stock / Monthly Yarn'
 
-    const month=ref(new Date().getMonth()+1)
-    const year=ref(new Date().getFullYear())
-    const items=[
-        {title:'January',value:1},
-        {title:'February',value:2},
-        {title:'March',value:3},
-        {title:'April',value:4},
-        {title:'May',value:5},
-        {title:'June',value:6},
-        {title:'July',value:7},
-        {title:'August',value:8},
-        {title:'September',value:9},
-        {title:'October',value:10},
-        {title:'November',value:11},
-        {title:'December',value:12}        
-    ]
+    const now=new Date()
+    const thisMonth=`${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-01 to ${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`
+    const dateRange=ref(thisMonth)
+    const isOrganic=ref(false)
     const loadings=ref<boolean[]>([])
-    watch([month,year],async([newMonth,newYear],[oldMonth,oldYear])=>{
-        if (newMonth !== oldMonth || newYear !== oldYear) {
+    watch([dateRange,isOrganic],async([newDateRange,newIsOrganic],[oldDateRange,oldIsOrganic])=>{
+        if (newDateRange !== oldDateRange || newIsOrganic !== oldIsOrganic) {
             clearGRid()
         }
     })
@@ -99,176 +86,9 @@
             },
         },
         {
-            headerName:'ID',field:'yarnId',type:'rightAligned',maxWidth:87,
-            cellRenderer:'YarnCostYarnidRenderer',
+            headerName:'ID',field:'yarnId',type:'rightAligned',maxWidth:87,pinned:'left',
             filter: true, floatingFilter: true, filterParams: { defaultOption: 'equals' },
             suppressFloatingFilterButton:true, 
-        },
-        {   headerName:'Sample',field:'sample',
-            cellRenderer:'VIconRenderer',
-            cellRendererParams:{
-                values:[
-                    {color:'secondary',icon:'tabler-check',value:true},
-                ]
-            },
-            cellClass:'d-flex align-center justify-center',
-            filter:'agTextColumnFilter',
-            filterParams:{
-                filterOptions: ["equals"],
-                maxNumConditions: 1
-            },
-            floatingFilter:true,
-            floatingFilterComponent:'DropDownFloatingFilter',
-            floatingFilterComponentParams:{
-                values: [
-                { 'text': 'All', 'value': '' }, 
-                { 'text': 'Sample', 'value': true }, 
-                { 'text': 'Order', 'value': false }]
-            },
-            suppressFloatingFilterButton:true,    
-        },
-        {
-            field:'cost',type:'rightAligned',
-             valueFormatter:(params:any)=>{
-                 return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-             }
-        },
-        {
-            headerName:'Begin',
-            children:[
-                {
-                    headerName:'Ctns',field:'beginCarton',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    },
-                    cellStyle:{'color':'#B388FF','background-color':'#b388ff1a'}
-                },
-                {
-                    headerName:'Kgs',field:'beginKgs',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'#B388FF','background-color':'#b388ff1a'}
-                },
-                {
-                    headerName:'Price',field:'beginPrice',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    },
-                    cellStyle:{'color':'#B388FF','background-color':'#b388ff1a'}
-                },
-                {
-                    headerName:'Amt',field:'beginAmount',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'#B388FF','background-color':'#b388ff1a'}
-                },
-            ],
-        },
-        {
-            headerName:'In',
-            children:[
-                {
-                    headerName:'Ctns',field:'inCarton',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
-                },
-                {
-                    headerName:'Kgs',field:'inKgs',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
-                },
-                {
-                    headerName:'Price',field:'inPrice',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:4}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
-                },
-                {
-                    headerName:'Amt',field:'inAmount',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
-                },
-            ],
-        },
-        {
-            headerName:'Return',
-            children:[
-                {
-                    headerName:'Ctns',field:'returnCarton',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-warning))','background-color':'rgba(var(--v-theme-warning),0.1)'}
-                },
-                {
-                    headerName:'Kgs',field:'returnKgs',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-warning))','background-color':'rgba(var(--v-theme-warning),0.1)'}
-                },
-            ],
-        },
-        {
-            headerName:'Out',
-            children:[
-                {
-                    headerName:'Ctns',field:'outCarton',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-error))','background-color':'rgba(var(--v-theme-error),0.1)'}
-                },
-                {
-                    headerName:'Kgs',field:'outKgs',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-error))','background-color':'rgba(var(--v-theme-error),0.1)'}
-                },
-                {
-                    headerName:'Amt',field:'outAmount',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-error))','background-color':'rgba(var(--v-theme-error),0.1)'}
-                },
-            ],
-        },
-        {
-            headerName:'Balance',
-            children:[
-                {
-                    headerName:'Ctns',field:'balanceCarton',pinned:'right',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-info))','background-color':'rgba(var(--v-theme-info),0.1)'}
-                },
-                {
-                    headerName:'Kgs',field:'balanceKgs',pinned:'right',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-info))','background-color':'rgba(var(--v-theme-info),0.1)'}
-                },
-                {
-                    headerName:'Amt',field:'balanceAmount',pinned:'right',type:'rightAligned',
-                    valueFormatter:(params:any)=>{
-                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
-                    },
-                    cellStyle:{'color':'rgb(var(--v-theme-info))','background-color':'rgba(var(--v-theme-info),0.1)'}
-                },
-            ],
         },
         {
             field:'code',
@@ -276,27 +96,183 @@
             suppressFloatingFilterButton:true, 
         },
         {
-            field:'mixed',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-            suppressFloatingFilterButton:true, 
+            headerName:'Begin',
+            children:[
+                {
+                    headerName:'Carton',field:'beginCarton',type:'rightAligned',
+                    cellRenderer:'YarnMonthlyCartonRenderer',
+                    cellRendererParams:{
+                        values:[
+                            {color:'#B388FF',label:'Begin'}
+                        ]
+                    },
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'background-color':'#b388ff1a'}
+                        }
+                    }
+                },
+                {
+                    headerName:'Weight',field:'beginWeight',type:'rightAligned',
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'color':'#B388FF','background-color':'#b388ff1a'}
+                        }
+                    }
+                },
+                {
+                    headerName:'Amount',field:'beginAmount',type:'rightAligned',
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'color':'#B388FF','background-color':'#b388ff1a'}
+                        }
+                    }
+                },
+            ],
         },
         {
-            field:'supplier',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-            suppressFloatingFilterButton:true, 
+            headerName:'In',
+            children:[
+                {
+                    headerName:'Carton',field:'inCarton',type:'rightAligned',
+                    cellRenderer:'YarnMonthlyCartonRenderer',
+                    cellRendererParams:{
+                        values:[
+                            {color:'rgb(var(--v-theme-success))',label:'In'}
+                        ]
+                    },
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'background-color':'rgba(var(--v-theme-success),0.1)'}
+                        }
+                    }
+                },
+                {
+                    headerName:'Weight',field:'inWeight',type:'rightAligned',
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
+                        }
+                    }
+                },
+            ],
         },
         {
-            field:'department',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-            suppressFloatingFilterButton:true, 
+            headerName:'Return',
+            children:[
+                {
+                    headerName:'Carton',field:'returnCarton',type:'rightAligned',
+                    cellRenderer:'YarnMonthlyCartonRenderer',
+                    cellRendererParams:{
+                        values:[
+                            {color:'rgb(var(--v-theme-warning))',label:'Return'}
+                        ]
+                    },
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'background-color':'rgba(var(--v-theme-warning),0.1)'}
+                        }
+                    }
+                },
+                {
+                    headerName:'Weight',field:'returnWeight',type:'rightAligned',
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'color':'rgb(var(--v-theme-warning))','background-color':'rgba(var(--v-theme-warning),0.1)'}
+                        }
+                    }
+                },
+            ],
         },
         {
-            field:'beginDepartment',
-            filter: true, floatingFilter: true, filterParams: { defaultOption: 'startsWith' },
-            suppressFloatingFilterButton:true, 
+            headerName:'Out',
+            children:[
+                {
+                    headerName:'Carton',field:'outCarton',type:'rightAligned',
+                    cellRenderer:'YarnMonthlyCartonRenderer',
+                    cellRendererParams:{
+                        values:[
+                            {color:'rgb(var(--v-theme-error))',label:'Out'}
+                        ]
+                    },
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'background-color':'rgba(var(--v-theme-error),0.1)'}
+                        }
+                    }
+                },
+                {
+                    headerName:'Weight',field:'outWeight',type:'rightAligned',
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'color':'rgb(var(--v-theme-error))','background-color':'rgba(var(--v-theme-error),0.1)'}
+                        }
+                    }
+                },
+            ],
         },
-        {field:'monthYear',hide:true},
-        
+        {
+            headerName:'Balance',
+            children:[
+                {
+                    headerName:'Carton',field:'balanceCarton',type:'rightAligned',
+                    cellRenderer:'YarnMonthlyCartonRenderer',
+                    cellRendererParams:{
+                        values:[
+                            {color:'rgb(var(--v-theme-info))',label:'Balance'}
+                        ]
+                    },
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat().format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                         return {'color':'rgba(var(--v-theme-info)', 'background-color':'rgba(var(--v-theme-info),0.1)'}
+                    }
+                },
+                {
+                    headerName:'Weight',field:'balanceWeight',type:'rightAligned',
+                    valueFormatter:(params:any)=>{
+                        return (isNaN(params.value)|| params.value===0)?'': new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(params.value)
+                    },
+                    cellStyle:(params:any)=>{
+                        if(params.data){
+                            return {'color':'rgb(var(--v-theme-info))','background-color':'rgba(var(--v-theme-info),0.1)'}
+                        }
+                    }
+                },
+                {
+                    field:'dateSearch',hide:true,
+                }
+            ],
+        },
+       
     ])
     const defaultColDef = ref<ColDef>({
       sortable: false,
@@ -338,24 +314,22 @@
                 try {
                     loadings.value[0]=true
                     const request={startRow:params.startRow,endRow:params.endRow,filterModel:params.filterModel,sortModel:params.sortModel}
-                    const {data,footer} = await $api<any>(`${import.meta.env.BASE_URL}api/yarn/getyarncostpartial?year=${year.value}&month=${month.value.toString().padStart(2,'0')}&request=${JSON.stringify(request)}&exportExcel=false`)
+                    const {data,footer} = await $api<any>(`${import.meta.env.BASE_URL}api/yarn/GetYarnMonthlyPartial?dateSearch=${dateRange.value}&isOrganic=${isOrganic.value}&request=${JSON.stringify(request)}&exportExcel=false`)
                     if(footer){
                         rowFooter.value=[{
                             totalRows:footer.totalRows,
                             beginCarton : footer.beginCarton,
-                            beginKgs:footer.beginKgs,
+                            beginWeight:footer.beginWeight,
                             beginAmount:footer.beginAmount,
                             inCarton:footer.inCarton,
-                            inKgs:footer.inKgs,
-                            inAmount:footer.inAmount,
+                            inWeight:footer.inWeight,
+                            
                             returnCarton:footer.returnCarton,
-                            returnKgs:footer.returnKgs,
+                            returnWeight:footer.returnWeight,
                             outCarton:footer.outCarton,
-                            outKgs:footer.outKgs,
-                            outAmount:footer.outAmount,
+                            outWeight:footer.outWeight,
                             balanceCarton : footer.balanceCarton,
-                            balanceKgs:footer.balanceKgs,
-                            balanceAmount:footer.balanceAmount
+                            balanceWeight:footer.balanceWeight
                         }]
                     }
                     
@@ -379,11 +353,11 @@
         try {
             loadings.value[1]=true
             const request={startRow:0,endRow:0,filterModel:gridApi.value?.getFilterModel(),sortModel:null}
-            const res = await $api<any>(`${import.meta.env.BASE_URL}api/yarn/getyarncostpartial?year=${year.value}&month=${month.value.toString().padStart(2,'0')}&request=${JSON.stringify(request)}&exportExcel=true`)
+            const res = await $api<any>(`${import.meta.env.BASE_URL}api/yarn/GetYarnMonthlyPartial?dateSearch=${dateRange.value}&isOrganic=${isOrganic.value}&request=${JSON.stringify(request)}&exportExcel=true`)
             const url=window.URL.createObjectURL(res)
             const link=document.createElement('a')
             link.href=url
-            link.setAttribute('download','YarnCost.xlsx')
+            link.setAttribute('download','YarnMonthly.xlsx')
             document.body.appendChild(link)
             link.click()
             link.remove()
@@ -410,43 +384,41 @@
             rowFooter.value=[{
                 totalRows:0,
                 beginCarton : 0,
-                beginKgs : 0,
+                beginWeight : 0,
                 beginAmount : 0,
                 inCarton : 0,
-                inKgs : 0,
-                inAmount : 0,
+                inWeight : 0,
                 returnCarton : 0,
-                returnKgs : 0,
+                returnWeight : 0,
                 outCarton : 0,
-                outKgs : 0,
-                outAmount : 0,
+                outWeight : 0,
                 balanceCarton : 0,
                 balanceKgs:0,
-                balanceAmount:0
             }]
     }
 
     defineExpose({
-        YarnCostYarnidRenderer,
-        DropDownFloatingFilter,
-        VIconRenderer,
+        YarnMonthlyCartonRenderer,
     })
 </script>
 <template>
     <VCard>
         <VCardText class="px-1 py-1">
             <VRow no-gutters>
-                <VCol cols="10" sm="6" md="4" lg="3" xl="2"  class="pa-1 d-flex gap-1">
-                    <VSelect
-                        v-model="month"
-                        :items="items"
-                        item-title="title"
-                        item-value="value"
-                        label="Select Month"
+                <VCol cols="2" sm="auto" class="pa-3">
+                    <label class="v-label text-body-2 text-high-emphasis">Date</label>
+                </VCol>
+                <VCol cols="10" sm="6" md="4" lg="3" xl="2"  class="pa-1">
+                    <AppDateTimePicker
+                        v-model="dateRange"
+                        placeholder="Select date range"
+                        :config="{mode:'range'}"
                     />
-                    <VTextField
-                        v-model="year"
-                        label="Year"
+                </VCol>
+                <VCol cols="6" sm="4" md="3" lg="2" class="pa-1">
+                    <VCheckbox
+                        v-model="isOrganic"
+                        label="เส้นด้าย Organic"
                     />
                 </VCol>
                 <VCol cols="6" sm="12" md="auto" class="pa-1 d-flex flex-column flex-md-row">

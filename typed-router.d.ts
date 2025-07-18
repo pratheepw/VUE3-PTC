@@ -146,5 +146,6 @@ declare module 'vue-router/auto-routes' {
     'yarn-stock-yarn-balance': RouteRecordInfo<'yarn-stock-yarn-balance', '/yarn-stock/yarn-balance', Record<never, never>, Record<never, never>>,
     'yarn-stock-yarn-check': RouteRecordInfo<'yarn-stock-yarn-check', '/yarn-stock/yarn-check', Record<never, never>, Record<never, never>>,
     'yarn-stock-yarn-cost': RouteRecordInfo<'yarn-stock-yarn-cost', '/yarn-stock/yarn-cost', Record<never, never>, Record<never, never>>,
+    'yarn-stock-yarn-monthly': RouteRecordInfo<'yarn-stock-yarn-monthly', '/yarn-stock/yarn-monthly', Record<never, never>, Record<never, never>>,
   }
 }

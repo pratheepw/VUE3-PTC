@@ -57,7 +57,9 @@
     // 👉 Set current page title
     myStore.currentPageTitle='Yarn Stock / Yarn Balance'
 
-    const dateRange=ref('')
+    const now=new Date()
+    const thisMonth=`${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-01 to ${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`
+    const dateRange=ref(thisMonth)
     const searchType=ref('Date')
     const isDisabled=ref(false)
     const loadings=ref<boolean[]>([])
@@ -136,7 +138,7 @@
              cellStyle:(params:any)=>{
                 if(params.data){
                     if(params.data.status==='Begin'){
-                        return {'color':'#B388FF'}
+                        return {'color':'#B388FF','background-color':'#b388ff1a'}
                     }else if(params.data.status==='Receive'){
                         return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
                     }else if(params.data.status==='Return'){
@@ -153,7 +155,7 @@
              cellStyle:(params:any)=>{
                 if(params.data){
                     if(params.data.status==='Begin'){
-                        return {'color':'#B388FF'}
+                        return {'color':'#B388FF','background-color':'#b388ff1a'}
                     }else if(params.data.status==='Receive'){
                         return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
                     }else if(params.data.status==='Return'){
@@ -170,7 +172,7 @@
              cellStyle:(params:any)=>{
                 if(params.data){
                     if(params.data.status==='Begin'){
-                        return {'color':'#B388FF'}
+                        return {'color':'#B388FF','background-color':'#b388ff1a'}
                     }else if(params.data.status==='Receive'){
                         return {'color':'rgb(var(--v-theme-success))','background-color':'rgba(var(--v-theme-success),0.1)'}
                     }else if(params.data.status==='Return'){

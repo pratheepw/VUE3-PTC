@@ -15,8 +15,8 @@
 <template>
     <router-link 
         v-if="yarnId"
-        to="#" 
-        @click="isDialogVisible=true"
+        to="/yarn-stock/yarn-cost" 
+        @click.prevent="isDialogVisible=true"
     >
         {{ yarnId }}
     </router-link>

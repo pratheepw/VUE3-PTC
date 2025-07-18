@@ -172,10 +172,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
     const YarnStockData=[
         {
             title:'Monthly Yarn',
-            to:'',
+            to:'/yarn-stock/yarn-monthly',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {

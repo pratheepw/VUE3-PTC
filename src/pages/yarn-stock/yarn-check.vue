@@ -59,7 +59,9 @@
     // 👉 Set current page title
     myStore.currentPageTitle='Yarn Stock / Check In-Out-Return'
 
-    const dateRange=ref('')
+    const now=new Date()
+    const thisMonth=`${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-01 to ${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`
+    const dateRange=ref(thisMonth)
     const status=ref('All')
     const loadings=ref<boolean[]>([])
     watch([dateRange,status],async([newDateRange,newStatus],[oldDateRange,oldStatus])=>{

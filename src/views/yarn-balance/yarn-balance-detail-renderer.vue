@@ -20,8 +20,8 @@
 <template>
     <router-link 
         v-if="yarnId"
-        to="#" 
-        @click="isDialogVisible=true"
+        to="/yarn-stock/yarn-balance" 
+        @click.prevent="isDialogVisible=true"
     >
         <VIcon
             :size="22"

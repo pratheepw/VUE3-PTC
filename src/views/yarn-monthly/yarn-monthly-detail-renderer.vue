@@ -1,19 +1,19 @@
 <script setup lang="ts">
     import { RouterLink } from 'vue-router';
-    import YarnCheckDialog from './yarn-check-dialog.vue';
+    import YarnMonthlyDetailDialog from './yarn-monthly-detail-dialog.vue';
 
     const props=defineProps({params:Object})
 
     const isDialogVisible=ref(false)
-    const docNo=ref(props.params?.data?.docNo)
+    const searchType=ref(props.params?.data?.searchType)
+    const documentNo=ref(props.params?.data?.documentNo)
     const yarnId=ref(props.params?.data?.yarnId)
-    const status=ref(props.params?.data?.status)
-
+    const lotNo=ref(props.params?.data?.lotNo)
 </script>
 <template>
     <router-link 
-        v-if="docNo"
-        to="/yarn-stock/yarn-check" 
+        v-if="documentNo"
+        to='/yarn-stock/yarn-monthly'
         @click.prevent="isDialogVisible=true"
     >
         <VIcon
@@ -23,10 +23,11 @@
         ></VIcon>
     </router-link>
 
-    <YarnCheckDialog
+    <YarnMonthlyDetailDialog
         v-model:is-dialog-visible="isDialogVisible"
-        :docNo="docNo"
+        :searchType="searchType"
+        :documentNo="documentNo"
         :yarnId="yarnId"
-        :status="status"
+        :lotNo="lotNo"
     />
 </template>
