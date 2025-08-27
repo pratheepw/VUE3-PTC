@@ -60,8 +60,8 @@
     myStore.currentPageTitle='Yarn Stock / Check In-Out-Return'
 
     const now=new Date()
-    const thisMonth=`${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-01 to ${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}`
-    const dateRange=ref(thisMonth)
+    const thisDay=now.toISOString().substring(0,10)
+    const dateRange=ref(thisDay)
     const status=ref('All')
     const loadings=ref<boolean[]>([])
     watch([dateRange,status],async([newDateRange,newStatus],[oldDateRange,oldStatus])=>{

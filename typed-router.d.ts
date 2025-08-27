@@ -71,6 +71,7 @@ declare module 'vue-router/auto-routes' {
     'extensions-swiper': RouteRecordInfo<'extensions-swiper', '/extensions/swiper', Record<never, never>, Record<never, never>>,
     'extensions-tour': RouteRecordInfo<'extensions-tour', '/extensions/tour', Record<never, never>, Record<never, never>>,
     'fabric-fabric-dimension': RouteRecordInfo<'fabric-fabric-dimension', '/fabric/fabric-dimension', Record<never, never>, Record<never, never>>,
+    'fabric-fabric-ingredient': RouteRecordInfo<'fabric-fabric-ingredient', '/fabric/fabric-ingredient', Record<never, never>, Record<never, never>>,
     'fabric-fabric-registration': RouteRecordInfo<'fabric-fabric-registration', '/fabric/fabric-registration', Record<never, never>, Record<never, never>>,
     'fabric-wip-daily-delivery': RouteRecordInfo<'fabric-wip-daily-delivery', '/fabric-wip/daily-delivery', Record<never, never>, Record<never, never>>,
     'forgot-password': RouteRecordInfo<'forgot-password', '/forgot-password', Record<never, never>, Record<never, never>>,

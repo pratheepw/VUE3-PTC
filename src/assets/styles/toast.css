@@ -1,0 +1,27 @@
+/*Primary*/
+.Toastify__toast-theme--colored.Toastify__toast--default {
+  background-color: #675dd8d8 !important;
+}
+/*Success*/
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: #24b364d8 !important;
+}
+/*Error*/
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  background-color: #e64449d8 !important;
+}
+/*Warning*/
+.Toastify__toast-theme--colored.Toastify__toast--warning {
+  background-color: #e68e3cd8 !important;
+}
+/*Info*/
+.Toastify__toast-theme--colored.Toastify__toast--info {
+  background-color: #00a6bcd8 !important;
+}
+/* ปรับ global CSS */
+.Toastify__toast-body {
+  white-space: normal !important; /* ให้ขึ้นบรรทัดใหม่ได้ */
+  overflow: hidden !important; /* ไม่ตัดข้อความ */
+  text-overflow: unset !important; /* ยกเลิก ... */
+  word-break: break-word; /* ตัดบรรทัดเมื่อข้อความยาว */
+}

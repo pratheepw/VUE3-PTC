@@ -89,10 +89,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         },
         {
             title:'Fabric Ingredient',
-            to:'',
+            to:'/fabric/fabric-ingredient',
             props:{
                 prependIcon:'tabler-point',
-                disabled:true
+                disabled:false
             },
         },
         {

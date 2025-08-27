@@ -57,7 +57,9 @@
     // 👉 Set current page title
     myStore.currentPageTitle='Finish Fabric WIP / Daily Delivery'
 
-    const dateRange=ref('')
+    const now=new Date()
+    const thisDay=now.toISOString().substring(0,10)
+    const dateRange=ref(thisDay)
     const loadings=ref<boolean[]>([])
     watch(dateRange,async(newValue,oldValue)=>{
         if (newValue !== oldValue) {

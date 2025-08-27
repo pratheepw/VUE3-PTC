@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-
 import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 
@@ -11,12 +10,30 @@ import '@styles/styles.scss'
 import "ag-grid-community/styles/ag-grid.css" // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css" // Optional Theme applied to the Data Grid
 import "@styles/aggrid-styles.css"
+import Vue3Toastify,{type ToastContainerOptions} from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
+import '@/assets/styles/toast.css'
+
+//import Toast,{PluginOptions, POSITION} from 'vue-toastification'
+//import "vue-toastification/dist/index.css"
+
 
 import { useAuthStore } from './stores/auth'
 
 const startApp=async ()=>{
     // Create vue app
     const app = createApp(App)
+
+    //Toast
+    app.use(
+        Vue3Toastify,
+        {
+            autoClose:5000,
+            dangerouslyHTMLString: true,
+            theme:'colored'
+            //...
+        } as ToastContainerOptions
+    )
 
     // Register plugins
     registerPlugins(app)

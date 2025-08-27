@@ -15,8 +15,8 @@
 <template>
     <router-link 
         v-if="fabricCode"
-        to="#" 
-        @click="isDialogVisible=true"
+        to="/fabric-wip/daily-delivery" 
+        @click.prevent="isDialogVisible=true"
     >
         {{ fabricCode }}
     </router-link>

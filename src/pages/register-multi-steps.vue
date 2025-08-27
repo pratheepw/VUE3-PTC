@@ -69,8 +69,8 @@ const genders=[
 
 const positions=['Worker','Staff','LL','ASV','SV','ASC','SC','SMGR','ADMGR','DMGR','Director']
 const departments=[
-  'Account','Dyeing','Exim','Factory 1','Factory 2','Factory 3',
-  'HR&Admin','Inter','Knitting','Sales1','Sales2','Sales3',
+  'Account','Dyeing','Exim','Fabric Develop','Factory 1','Factory 2','Factory 3',
+  'HR&Admin','Inter','Knitting','Printing','Sales1','Sales2','Sales3',
   'Sales4','Sales5','Setting','SLL','System','Thai Parfun','TPiCS'
 ]
 
