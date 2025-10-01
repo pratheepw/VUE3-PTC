@@ -315,7 +315,7 @@
                     weightPerPcs:weightPerPcs.value,
                     section:section.value,
                     ingredients:ingredients,
-                    userName:useCookie('userData').value?.username
+                    userName:useCookie<any>('userData').value?.username
                 },
                 onResponseError({response}){
                     if(response._data.message){

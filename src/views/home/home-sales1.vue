@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { disabled } from '../demos/components/pagination/demoCodePagination';
-
     const packingData=[
         {
             title:'Packing Daily',

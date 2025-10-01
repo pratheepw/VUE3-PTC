@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
+import { title } from 'node:process'
 
     const router=useRouter()
 
@@ -167,6 +167,15 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
                 disabled:true
             },
         },
+        {
+            title:'Item Master',
+            to:'/fabric/item-master',
+            props:{
+                prependIcon:'tabler-lock',
+                disabled:false
+            },
+        }
+
     ]
 
     const YarnStockData=[
@@ -233,10 +242,10 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
     const EximData=[
         {
             title:'Export Invoice',
-            to:'',
+            to:'/exim/export-invoice',
             props:{
                 prependIcon:'tabler-lock',
-                disabled:true
+                disabled:false
             },
         },
         {
@@ -734,7 +743,7 @@ import { itemSlot } from '../demos/forms/form-elements/rating/demoCodeRating'
         }
     ]
 
-    const openLink=(item)=>{
+    const openLink=(item:any)=>{
         console.log(item)
         router.push(item)
     }

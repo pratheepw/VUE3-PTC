@@ -1,7 +1,7 @@
-// Write your overrides
-/* @use "vuetify/styles" as * with (
+@use "vuetify/styles" as * with (
   $body-font-family: "Sarabun",
-); */
+);
+
 /* Chrome, Safari */
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
@@ -13,4 +13,6 @@ input[type='number']::-webkit-outer-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+
 

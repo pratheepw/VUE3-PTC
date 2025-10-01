@@ -2,6 +2,7 @@
   import HomeNakhonchaisri from '@/views/home/home-nakhonchaisri.vue'
   import HomeSales1 from '@/views/home/home-sales1.vue'
   import HomeSales2 from '@/views/home/home-sales2.vue'
+  import homeThaiparfun from '@/views/home/home-thaiparfun.vue'
   import { useMyStore } from '@/stores/my'
 
   definePage({
@@ -22,4 +23,5 @@
   <HomeNakhonchaisri/>
   <HomeSales1 />
   <HomeSales2 />
+  <homeThaiparfun/>
 </template>
